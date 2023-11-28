@@ -2,7 +2,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-require("dotenv").config({ path: "./config.env" });
+require("dotenv").config({ path: "./configure.env" });
 
 // Set up the port, default to 5000 if not provided in the environment
 const port = process.env.PORT || 5000;
