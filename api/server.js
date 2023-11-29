@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 require("dotenv").config({ path: "./configure.env" });
+const connectToDatabase = require('./db/conn');
 
 // Set up the port, default to 5000 if not provided in the environment
 const port = process.env.PORT || 5000;
@@ -16,16 +17,22 @@ app.use(express.json());
 // Include the routes defined in the "record" module
 app.use(require("./routes/record"));
 
-// Import the function to connect to the MongoDB database
-const dbo = require("./db/conn");
+connectToDatabase().catch((error) => process.exit(1));
+// // Import the function to connect to the MongoDB database
+// const dbo = require("./db/conn");
+
+//Include the authentication Routes
+const authRoutes = require("./routes/authRoutes");
+app.use("/auth",authRoutes);
+
 
 // Start the Express app and listen on the specified port
 app.listen(port, () => {
   
-  // Perform a database connection when the server starts
-  dbo.connectToServer(function (err) {
-    if (err) console.error(err);
-  });
+  // // Perform a database connection when the server starts
+  // dbo.connectToServer(function (err) {
+  //   if (err) console.error(err);
+  // });
 
   // Log a message indicating that the server is running
   console.log(`Server is running on port: ${port}`);
