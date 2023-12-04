@@ -1,29 +1,36 @@
 const mongoose = require('mongoose');
 
 const householdSchema = new mongoose.Schema({
-    users: [{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
-    }],
+    name: {
+        type: String,
+        required: true,
+      },
+    // members: [{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     ref:'User'
+    // }],
     
     //ToDoList or Shopping list
-    toDoList: [{
-        task: String,
-        completed: Boolean
-    }],
+    tasks: {
+        type: [{
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'ToDoList',
+        }],
+        default: [],
+      },
 
-    calendar: {
-        //Define structure for calendar
-    },
+    // calendar: {
+    //     //Define structure for calendar
+    // },
 
-    choreChart: [{
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        },
-        chore: String,
+    // choreChart: [{
+    //     user: {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: 'User'
+    //     },
+    //     chore: String,
 
-    }],
+    // }],
 
 
 
