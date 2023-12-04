@@ -1,4 +1,6 @@
 const express = require("express");
+const verifyToken = require('../middleware/authMiddleware');
+
  
 // recordRoutes is an instance of the express router.
 // We use it to define our routes.
@@ -79,6 +81,18 @@ recordRoutes.route("/:id").delete((req, response) => {
    console.log("1 document deleted");
    response.json(obj);
  });
+});
+
+
+recordRoutes.route("/record").get(verifyToken, function (req, res) {
+  let db_connect = dbo.getDb("employees");
+  db_connect
+    .collection("records")
+    .find({})
+    .toArray(function (err, result) {
+      if (err) throw err;
+      res.json(result);
+    });
 });
  
 module.exports = recordRoutes;

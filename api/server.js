@@ -23,7 +23,7 @@ connectToDatabase().catch((error) => process.exit(1));
 
 //Include the authentication Routes
 const authRoutes = require("./routes/authRoutes");
-app.use("/auth",authRoutes);
+app.use("/api",authRoutes);
 
 
 // Start the Express app and listen on the specified port
