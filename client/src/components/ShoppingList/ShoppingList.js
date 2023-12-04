@@ -1,29 +1,27 @@
-// ShoppingList.js
-
 import React, { useState, useEffect } from 'react';
 import './ShoppingList.css'; // Import the CSS file
 import axios from 'axios';
 
 const ShoppingList = () => {
-  const [toDoList, setToDoList] = useState([]);
+  const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
   const [editingTask, setEditingTask] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const backendApiUrl = 'http://localhost:3001/tasks';
-  useEffect(() => {
-   
+const householdID='656dffd6e3baf8051351da1a'; //HARDCODED FOR NOW -- UPDATE DYNAMICALLY LATER
+  const backendApiUrl = `http://localhost:3001/households/${householdID}/tasks`; // Replace 'your_household_id'
 
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(backendApiUrl);
-        setToDoList(response.data);
+        setTasks(response.data);
       } catch (error) {
         console.error('Error fetching data from the backend:', error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [backendApiUrl]);
 
   const addTask = () => {
     if (newTask.trim() === '') return;
@@ -34,7 +32,7 @@ const ShoppingList = () => {
 
     axios.post(backendApiUrl, newTaskObject)
       .then(response => {
-        setToDoList([...toDoList, response.data]);
+        setTasks([...tasks, response.data]);
       })
       .catch(error => {
         console.error('Error adding task to the backend:', error);
@@ -46,7 +44,7 @@ const ShoppingList = () => {
   const deleteTask = (taskId) => {
     axios.delete(`${backendApiUrl}/${taskId}`)
       .then(() => {
-        setToDoList(toDoList.filter((task) => task._id !== taskId));
+        setTasks(tasks.filter((task) => task._id !== taskId));
       })
       .catch(error => {
         console.error('Error deleting task from the backend:', error);
@@ -56,12 +54,12 @@ const ShoppingList = () => {
   };
 
   const toggleTaskStatus = (taskId) => {
-    axios.patch(`${backendApiUrl}/${taskId}`, { completed: !toDoList.find(task => task._id === taskId).completed })
+    axios.patch(`${backendApiUrl}/${taskId}`, { completed: !tasks.find(task => task._id === taskId).completed })
       .then(response => {
-        const updatedList = toDoList.map((task) =>
+        const updatedList = tasks.map((task) =>
           task._id === taskId ? response.data : task
         );
-        setToDoList(updatedList);
+        setTasks(updatedList);
       })
       .catch(error => {
         console.error('Error toggling task status in the backend:', error);
@@ -78,10 +76,10 @@ const ShoppingList = () => {
   const finishEditingTask = () => {
     axios.put(`${backendApiUrl}/${editingTask._id}`, { task: editingTask.task })
       .then(response => {
-        const updatedList = toDoList.map((task) =>
+        const updatedList = tasks.map((task) =>
           task._id === editingTask._id ? response.data : task
         );
-        setToDoList(updatedList);
+        setTasks(updatedList);
       })
       .catch(error => {
         console.error('Error updating task in the backend:', error);
@@ -113,7 +111,7 @@ const ShoppingList = () => {
       </div>
       <table>
         <tbody>
-          {toDoList.map((task) => (
+          {tasks.map((task) => (
             <tr key={task._id} className={task.completed ? 'completed' : ''}>
               <td>
                 <input
