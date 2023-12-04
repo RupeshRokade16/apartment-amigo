@@ -21,6 +21,11 @@ app.use(require("./routes/record"));
 const authRoutes = require("./routes/authRoutes");
 app.use("/api",authRoutes);
 
+//Including controllers:
+app.use(require("./controllers/toDoListController"));
+app.use(require("./controllers/householdController"));
+app.use(require("./controllers/ChoreController"));
+
 connectToDatabase().catch((error) => process.exit(1));
 
 // Start the Express app and listen on the specified port
