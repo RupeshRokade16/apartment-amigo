@@ -12,7 +12,7 @@ const App = () => {
       Hello World
       {
         <div>
-        <ShoppingList/>
+        {/* <ShoppingList/> */}
         <ChoreChart/>
         </div>
       }
