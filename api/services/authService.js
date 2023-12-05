@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 
+
 async function loginUser(username, password) {
   const user = await User.findOne({ username, password });
 
@@ -23,11 +24,17 @@ async function loginUser(username, password) {
 async function registerUser(username, email, password) {
   const newUser = new User({ username, email, password });
   await newUser.save();
+
+  // if (newUser.household === null){
+  //   console.log("Null household")
+  // } else {
+  //   console.log("Non null", newUser.household)
+  // }
   return newUser;
 }
 
 async function getUserData(headers) {
-  console.log('Printing :' , headers.authorization);
+  //console.log('Printing :' , headers.authorization);
   const token = headers.authorization.replace("Bearer ", "");
 
   return new Promise((resolve, reject) => {
@@ -50,4 +57,28 @@ async function getUserData(headers) {
   });
 }
 
+// const createOrJoinHousehold = async (action, inputValue) => {
+//   try {
+//     const token = localStorage.getItem('token');
+//     if (!token) {
+//       throw new Error('Token not found');
+//     }
+
+//     const headers = {
+//       Authorization: `Bearer ${token}`,
+//       'Content-Type': 'application/json',
+//     };
+
+//     // Add your logic here to make API request based on action and inputValue
+//     const response = await apiCaller.post('/api/household', { action, inputValue }, { headers });
+
+//     return response.data; // You may want to handle the response accordingly
+//   } catch (error) {
+//     console.error('Error creating or joining household:', error);
+//     throw error;
+//   }
+// };
+
 module.exports = { loginUser, registerUser, getUserData };
+
+

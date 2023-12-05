@@ -12,7 +12,9 @@ const verifyToken = (req, res, next) => {
       return res.status(401).json({ message: 'Unauthorized: Invalid token' });
     }
 
-    req.userId = decoded.userId; // Attach the decoded user ID to the request object
+    req.userId = decoded.userID; // Attach the decoded user ID to the request object
+    console.log("Decoded ", decoded.userID)
+    console.log("Req id" , req.userId);
     next();
   });
 };
