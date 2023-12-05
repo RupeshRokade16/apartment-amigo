@@ -17,6 +17,7 @@ const Login = () => {
 
       if (result && result.token) {
         // Login successful, redirect to the user dashboard
+        console.log("Here is the user", result.user)
         console.log("print statement ",  result.user.household==null);
         if (result.user.household == null){
           console.log("here")
