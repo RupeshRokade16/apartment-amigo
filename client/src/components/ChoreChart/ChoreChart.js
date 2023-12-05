@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import './ChoreChart.css'; // Import the CSS file
 import axios from 'axios';
 
-const ChoreChart = () => {
+const ChoreChart = (props) => {
   const [chores, setChores] = useState([]);
   const [newChore, setNewChore] = useState('');
   const [editingChore, setEditingChore] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [members, setMembers] = useState([]);
 
-  const householdID = '656dffd6e3baf8051351da1a'; // HARDCODED FOR NOW -- UPDATE DYNAMICALLY LATER
-  const backendApiUrl = `http://localhost:3001/households/${householdID}/chores`; // Replace 'your_household_id'
+  const householdID = props.householdID;
+  //const householdID = '656dffd6e3baf8051351da1a'; // HARDCODED FOR NOW -- UPDATE DYNAMICALLY LATER
+  const backendApiUrl = `http://localhost:5000/households/${householdID}/chores`; // Replace 'your_household_id'
 
   
 
@@ -20,7 +21,7 @@ useEffect(() => {
   const fetchData = async () => {
     try {
       // Fetch household members instead of hardcoded 'users'
-      const membersResponse = await axios.get(`http://localhost:3001/households/${householdID}/members`);
+      const membersResponse = await axios.get(`http://localhost:5000/households/${householdID}/members`);
       const householdMembers = membersResponse.data;
 
       const choresResponse = await axios.get(backendApiUrl);

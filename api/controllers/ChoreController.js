@@ -7,10 +7,10 @@ const Household = require('../models/householdModel'); // Import the Household m
 router.get('/households/:householdId/chores', async (req, res) => {
   try {
     const householdId = req.params.householdId;
-    console.log('Fetching chores for householdId:', householdId);
+    //console.log('Fetching chores for householdId:', householdId);
     const household = await Household.findById(householdId).populate('chores');
     const chores = household.chores;
-    console.log('Retrieved chores:', chores);
+    //console.log('Retrieved chores:', chores);
     res.json(chores);
   } catch (error) {
     console.error(error);
@@ -72,13 +72,24 @@ router.patch('/households/:householdId/chores/:choreId', async (req, res) => {
 
 // Update chore details
 router.put('/households/:householdId/chores/:choreId', async (req, res) => {
+  const {choreName, assignee} = req.body;
+  
   try {
-    const updatedChore = await Chore.findByIdAndUpdate(
-      req.params.choreId,
-      req.body,
-      { new: true }
-    );
-    res.json(updatedChore);
+    console.log("REQ body", req.body)
+    // const updatedChore = await Chore.findByIdAndUpdate(
+    //   req.params.choreId,
+    //   {choreName : choreName},
+    //   {assignee : assignee},
+    //   { new: true }
+    // );
+
+    const currentChore = await Chore.findById(req.params.choreId);
+
+    currentChore.assignee = assignee;
+    currentChore.choreName = choreName;
+
+    console.log("Updated chore" , currentChore)
+    res.json(currentChore);
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }

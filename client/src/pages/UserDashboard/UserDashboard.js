@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import apiCaller from '../../utils/apiCaller';
 import AuthService from '../../services/authService';
+import ChoreChart from '../../components/ChoreChart/ChoreChart';
+import ShoppingList from '../../components/ShoppingList/ShoppingList';
 
 const UserDashboard = () => {
   const [userData, setUserData] = useState(null);
@@ -63,6 +65,8 @@ const UserDashboard = () => {
         <div>
           <p>Welcome, {userData.username}!</p>
           <p>Household code, {userData.household}</p>
+          <ChoreChart householdID={userData.household}/>
+          <ShoppingList householdID={userData.household}/>
           {/* Render other user dashboard content */}
           <button onClick={handleLogout}>Logout</button>
         </div>
