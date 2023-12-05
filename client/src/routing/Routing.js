@@ -7,6 +7,7 @@ import About from '../pages/About/About';
 import Login from '../pages/Login/Login';
 import Register from '../pages/Register/Register';
 import UserDashboard from '../pages/UserDashboard/UserDashboard';
+import HouseholdSelection from '../pages/HouseholdSelection/HouseholdSelection';
 
 const Routing = () => {
   return (
@@ -18,6 +19,7 @@ const Routing = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/userDashboard" element={<UserDashboard />} />
+        <Route path="/householdSelection" element={<HouseholdSelection/>}/>
         {/* Additional routes can go here */}
       </Routes>
     </Router>

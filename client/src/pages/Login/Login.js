@@ -8,6 +8,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(true); // Set to true initially
   const [error, setError] = useState(null);
   const [redirectToDashboard, setRedirectToDashboard] = useState(false);
+  const [redirectToHousehold, setRedirectToHousehold] = useState(false);
 
   const handleLogin = async () => {
     try {
@@ -16,7 +17,16 @@ const Login = () => {
 
       if (result && result.token) {
         // Login successful, redirect to the user dashboard
-        setRedirectToDashboard(true);
+        console.log("Here is the user", result.user)
+        console.log("print statement ",  result.user.household==null);
+        if (result.user.household == null){
+          console.log("here")
+          setRedirectToHousehold(true);
+          
+        } else {
+          setRedirectToDashboard(true);
+        }
+
       } else {
         // Handle login failure
         setError('Invalid username or password');
@@ -33,10 +43,13 @@ const Login = () => {
   useEffect(() => {
     const checkExistingToken = async () => {
       const token = localStorage.getItem('token');
-      if (token) {
-        // Redirect to userDashboard if a token exists
-        setRedirectToDashboard(true);
-      }
+      // if (token) {
+      //   try{
+      //     const userInfo = AuthService.getUserInfo();
+      //   }
+      //   // Redirect to userDashboard if a token exists
+      //   setRedirectToDashboard(true);
+      // }
       setIsLoading(false); // Set loading to false after the check
     };
 
@@ -46,6 +59,10 @@ const Login = () => {
   if (isLoading) {
     // Render loading indicator or message while checking for the token
     return <p>Loading...</p>;
+  }
+
+  if (redirectToHousehold) {
+    return <Navigate to="/householdSelection" />;
   }
 
   if (redirectToDashboard) {

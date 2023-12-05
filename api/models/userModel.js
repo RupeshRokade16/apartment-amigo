@@ -22,7 +22,8 @@ const userSchema = mongoose.Schema({
     //Other Fields
     household: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Household'
+        ref: 'Household',
+        default : null
     }
 
 
