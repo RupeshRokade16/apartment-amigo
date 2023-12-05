@@ -50,6 +50,10 @@ const Login = () => {
       //   // Redirect to userDashboard if a token exists
       //   setRedirectToDashboard(true);
       // }
+
+      if (token){
+        setRedirectToDashboard(true);
+      }
       setIsLoading(false); // Set loading to false after the check
     };
 
