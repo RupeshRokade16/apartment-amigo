@@ -6,10 +6,10 @@ const choreSchema = new mongoose.Schema({
         unique: true,
         required: true
     },
-    // assignee: {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'User'
-    //   },
+    assignee: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      },
       completed: {
         type: Boolean,
         default: false,

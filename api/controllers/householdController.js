@@ -29,7 +29,7 @@ router.get('/households', async (req, res) => {
 // Get a specific household by ID
 router.get('/households/:id', async (req, res) => {
   try {
-    const household = await Household.findById(req.params.id).populate('tasks').populate('chores');;
+    const household = await Household.findById(req.params.id).populate('tasks').populate('chores').populate('members');
     res.json(household);
   } catch (error) {
     console.error(error);

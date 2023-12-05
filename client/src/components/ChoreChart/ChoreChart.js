@@ -7,29 +7,37 @@ const ChoreChart = () => {
   const [newChore, setNewChore] = useState('');
   const [editingChore, setEditingChore] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [members, setMembers] = useState([]);
 
   const householdID = '656dffd6e3baf8051351da1a'; // HARDCODED FOR NOW -- UPDATE DYNAMICALLY LATER
   const backendApiUrl = `http://localhost:3001/households/${householdID}/chores`; // Replace 'your_household_id'
 
-  // Simulate user data (you should fetch this from the backend)
-  const users = [
-    { id: 'user1', name: 'User 1' },
-    { id: 'user2', name: 'User 2' },
-    // Add more users as needed
-  ];
+  
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(backendApiUrl);
-        setChores(response.data);
-      } catch (error) {
-        console.error('Error fetching data from the backend:', error);
-      }
-    };
+  // ...
 
-    fetchData();
-  }, [backendApiUrl]);
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      // Fetch household members instead of hardcoded 'users'
+      const membersResponse = await axios.get(`http://localhost:3001/households/${householdID}/members`);
+      const householdMembers = membersResponse.data;
+
+      const choresResponse = await axios.get(backendApiUrl);
+      setChores(choresResponse.data);
+
+      // Set household members to be used in the dropdown
+      setMembers(householdMembers);
+    } catch (error) {
+      console.error('Error fetching data from the backend:', error);
+    }
+  };
+
+  fetchData();
+}, [backendApiUrl, householdID]);
+
+// ...
+
 
   const addChore = () => {
     if (newChore.trim() === '') return;
@@ -85,7 +93,8 @@ const ChoreChart = () => {
   const finishEditingChore = () => {
     const updatedChoreData = {
       choreName: editingChore.choreName,
-      assignee: editingChore.assignee,
+      // Send assignee as an object containing the _id
+      assignee: editingChore.assignee ? { _id: editingChore.assignee._id } : null,
     };
   
     axios.put(`${backendApiUrl}/${editingChore._id}`, updatedChoreData)
@@ -94,8 +103,6 @@ const ChoreChart = () => {
           chore._id === editingChore._id ? response.data : chore
         );
         setChores(updatedList);
-        console.log(updatedList);
-        
       })
       .catch(error => {
         console.error('Error updating chore in the backend:', error);
@@ -104,6 +111,8 @@ const ChoreChart = () => {
     setEditingChore(null);
     setIsModalOpen(false);
   };
+  
+  
 
   const handleModalClose = () => {
     setEditingChore(null);
@@ -160,22 +169,24 @@ const ChoreChart = () => {
                 )}
               </td>
               <td>
-              {editingChore && editingChore._id === chore._id ? (
+              
+
+{editingChore && editingChore._id === chore._id ? (
   // Edit mode - dropdown for assigning a user
   <div>
     <select
-      value={editingChore.assignee ? editingChore.assignee.id : ''}
+      value={editingChore.assignee ? editingChore.assignee : ''}
       onChange={(e) =>
         setEditingChore({
           ...editingChore,
-          assignee: users.find((user) => user.id === e.target.value) || null,
+          assignee: members.find((member) => member._id === e.target.value) || null,
         })
       }
     >
       <option value="">Select Assignee</option>
-      {users.map((user) => (
-        <option key={user.id} value={user.id}>
-          {user.name}
+      {members.map((member) => (
+        <option key={member._id} value={member._id}>
+          {member.username}
         </option>
       ))}
     </select>
@@ -188,8 +199,17 @@ const ChoreChart = () => {
   </div>
 ) : (
   // Display mode - show assigned user's name
-  <span>{chore.assignee ? chore.assignee.name : 'Not Assigned'}</span>
+ <span>
+    {chore.assignee ? (
+      members.find((member) => member._id === chore.assignee).username
+    ) : (
+      'Not Assigned'
+    )}
+  </span>
 )}
+
+
+
 
               </td>
 

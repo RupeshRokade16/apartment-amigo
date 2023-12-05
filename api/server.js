@@ -25,6 +25,7 @@ app.use("/api",authRoutes);
 app.use(require("./controllers/toDoListController"));
 app.use(require("./controllers/householdController"));
 app.use(require("./controllers/ChoreController"));
+app.use(require("./controllers/userController"));
 
 connectToDatabase().catch((error) => process.exit(1));
 
