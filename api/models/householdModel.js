@@ -5,10 +5,10 @@ const householdSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-    // members: [{
-    //     type:mongoose.Schema.Types.ObjectId,
-    //     ref:'User'
-    // }],
+    members: [{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    }],
     
     //ToDoList or Shopping list
     tasks: {

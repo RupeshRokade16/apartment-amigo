@@ -27,8 +27,10 @@ const UserDashboard = () => {
           };
           console.log(headers)
           const response = await apiCaller.get('/api/userData', { headers });
-          console.log('response data file ', response.data);
+          console.log('response data file ', response.data.user.household);
+          
           setUserData(response.data.user);
+          
         } else {
           // Token is not available, setRedirect to true
           setRedirect(true);
@@ -60,6 +62,7 @@ const UserDashboard = () => {
       {userData && (
         <div>
           <p>Welcome, {userData.username}!</p>
+          <p>Household code, {userData.household}</p>
           {/* Render other user dashboard content */}
           <button onClick={handleLogout}>Logout</button>
         </div>
