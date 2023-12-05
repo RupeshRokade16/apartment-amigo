@@ -12,8 +12,8 @@ const App = () => {
       Hello World
       {
         <div>
-        {/* <ShoppingList/> */}
-        <ChoreChart/>
+        
+        
         </div>
       }
       <Routing />
