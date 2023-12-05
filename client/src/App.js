@@ -9,7 +9,7 @@ import ChoreChart from './components/ChoreChart/ChoreChart'
 const App = () => {
   return (
     <div className='App'>
-      Hello World
+      
       {
         <div>
         
