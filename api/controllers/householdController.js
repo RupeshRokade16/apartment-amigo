@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Household = require('../models/householdModel');
 const ToDoList = require('../models/toDoListModel');
-
+const Chore = require('../models/choreModel')
 // Create a new household
 router.post('/households', async (req, res) => {
   try {
@@ -29,7 +29,7 @@ router.get('/households', async (req, res) => {
 // Get a specific household by ID
 router.get('/households/:id', async (req, res) => {
   try {
-    const household = await Household.findById(req.params.id).populate('tasks');
+    const household = await Household.findById(req.params.id).populate('tasks').populate('chores').populate('members');
     res.json(household);
   } catch (error) {
     console.error(error);
@@ -59,6 +59,7 @@ router.delete('/households/:id', async (req, res) => {
     
     // Remove tasks associated with the deleted household
     await ToDoList.deleteMany({ household: req.params.id });
+    await Chore.deleteMany({ household: req.params.id });
 
     res.json({ message: 'Household deleted successfully' });
   } catch (error) {

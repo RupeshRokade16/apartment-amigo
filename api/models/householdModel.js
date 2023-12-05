@@ -5,11 +5,14 @@ const householdSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-    // members: [{
-    //     type:mongoose.Schema.Types.ObjectId,
-    //     ref:'User'
-    // }],
-    
+    members: 
+    {
+      type: [{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
+      }],
+      default: [],
+    },
     //ToDoList or Shopping list
     tasks: {
         type: [{
@@ -19,20 +22,18 @@ const householdSchema = new mongoose.Schema({
         default: [],
       },
 
+    chores:
+    {
+      type: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Chore',
+      }],
+      default: [],
+    }  ,
+
     // calendar: {
     //     //Define structure for calendar
     // },
-
-    // choreChart: [{
-    //     user: {
-    //         type: mongoose.Schema.Types.ObjectId,
-    //         ref: 'User'
-    //     },
-    //     chore: String,
-
-    // }],
-
-
 
 });
 
