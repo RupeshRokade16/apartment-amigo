@@ -214,7 +214,7 @@ const createOrJoinHousehold = async (req, res) => {
 
       const user = await User.findById(userId);
       user.household = household._id;
-      await household.save();
+      await user.save();
 
       res
         .status(200)
