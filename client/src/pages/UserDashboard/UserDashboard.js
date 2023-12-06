@@ -73,15 +73,16 @@ const UserDashboard = () => {
             <h3>WELCOME, {userData.username}!</h3>
           </div>
           <div className="row">
+          <div className="col-md-2">
+              <CardLayout title={'Members'} content={<Members householdID={userData.household} />} />
+            </div>
             <div className="col-md-6">
               <CardLayout title={'Chore Chart'} content={<ChoreChart householdID={userData.household} />} />
             </div>
             <div className="col-md-4">
               <CardLayout title={'Shopping List'} content={<ShoppingList householdID={userData.household} />} />
             </div>
-            <div className="col-md-2">
-              <CardLayout title={'Members'} content={<Members householdID={userData.household} />} />
-            </div>
+           
           </div>
 
 
