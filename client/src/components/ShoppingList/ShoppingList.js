@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ShoppingList.css'; // Import the CSS file
 import axios from 'axios';
+import backendUrlPrefix from '../../utils/backendUrlPrefix';
 
 const ShoppingList = (props) => {
   const [tasks, setTasks] = useState([]);
@@ -10,7 +11,7 @@ const ShoppingList = (props) => {
 
   const householdID = props.householdID;
   //const householdID='656dffd6e3baf8051351da1a'; //HARDCODED FOR NOW -- UPDATE DYNAMICALLY LATER
-  const backendApiUrl = `http://localhost:5000/households/${householdID}/tasks`; // Replace 'your_household_id'
+  const backendApiUrl = `${backendUrlPrefix}/households/${householdID}/tasks`; // Replace 'your_household_id'
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,18 +112,18 @@ const ShoppingList = (props) => {
           </button>
         </div>
       </div>
-      <table>
+      <table className='sl-table'>
         <tbody>
           {tasks.map((task) => (
             <tr key={task._id} className={task.completed ? 'completed' : ''}>
-              <td>
+              <td className='sl-td'>
                 <input
                   type="checkbox"
                   checked={task.completed}
                   onChange={() => toggleTaskStatus(task._id)}
                 />
               </td>
-              <td>
+              <td className='sl-td'>
                 {editingTask && editingTask._id === task._id ? (
                   <div className="modal1">
                     <input
@@ -141,12 +142,12 @@ const ShoppingList = (props) => {
                   <span>{task.task}</span>
                 )}
               </td>
-              <td>
+              <td className='sl-td'>
                 <div>
-                  <button onClick={() => startEditingTask(task)} disabled={task.completed}>
+                  <button onClick={() => startEditingTask(task)} disabled={task.completed} className='my-btn edit-btn'>
                     <i className="fas fa-pencil-alt" ></i>
                   </button>
-                  <button onClick={() => deleteTask(task._id)}>
+                  <button onClick={() => deleteTask(task._id)} className='my-btn'>
                     <i className="fas fa-trash"></i>
                   </button>
                 </div>

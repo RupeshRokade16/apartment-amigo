@@ -11,7 +11,7 @@
 }
 
 .card-title {
-  background: #f2bed1;
+  background: #917FB3;
   border-radius: 10px 10px 0 0;
   color: #fff;
   text-align: center;
@@ -19,7 +19,7 @@
 }
 
 .card-content {
-  background: #f8e8ee;
+  background: #E5BEEC;
   border-radius: 0 0 10px 10px;
   padding: 15px;
   overflow-y: auto; /* Make the content area scrollable if it overflows */

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ChoreChart.css'; // Import the CSS file
 import axios from 'axios';
+import backendUrlPrefix from '../../utils/backendUrlPrefix.js';
 
 const ChoreChart = (props) => {
   const [chores, setChores] = useState([]);
@@ -11,9 +12,9 @@ const ChoreChart = (props) => {
 
   const householdID = props.householdID;
   //const householdID = '656dffd6e3baf8051351da1a'; // HARDCODED FOR NOW -- UPDATE DYNAMICALLY LATER
-  const backendApiUrl = `http://localhost:5000/households/${householdID}/chores`; // Replace 'your_household_id'
+  const backendApiUrl = `${backendUrlPrefix}/households/${householdID}/chores`; // Replace 'your_household_id'
 
-
+  console.log(backendApiUrl);
 
   // ...
 
@@ -21,7 +22,7 @@ const ChoreChart = (props) => {
     const fetchData = async () => {
       try {
         // Fetch household members instead of hardcoded 'users'
-        const membersResponse = await axios.get(`http://localhost:5000/households/${householdID}/members`);
+        const membersResponse = await axios.get(`${backendUrlPrefix}/households/${householdID}/members`);
         const householdMembers = membersResponse.data;
 
         const choresResponse = await axios.get(backendApiUrl);
@@ -88,14 +89,14 @@ const ChoreChart = (props) => {
 
   const startEditingChore = (chore) => {
     const assigneeId = chore.assignee ? chore.assignee : ''; // Use the _id of the assignee or an empty string
-  
+
     setEditingChore({
       ...chore,
       assignee: assigneeId,
     });
     setIsModalOpen(true);
   };
-  
+
 
   const finishEditingChore = () => {
     const updatedChoreData = {
@@ -141,42 +142,42 @@ const ChoreChart = (props) => {
           </button>
         </div>
       </div>
-      <table>
-        
+      <table className='cc-table'>
+
         <tbody>
           {chores.map((chore) => (
             <tr key={chore._id} className={chore.completed ? 'completed' : ''}>
-              <td>
+              <td className='cc-td'> 
                 <div>
-                  <button onClick={() => startEditingChore(chore)} disabled={chore.completed}>
+                  <button onClick={() => startEditingChore(chore)} disabled={chore.completed} className='my-btn edit-btn'>
                     <i className="fas fa-pencil-alt"></i>
                   </button>
-                  <button onClick={() => deleteChore(chore._id)}>
+                  <button onClick={() => deleteChore(chore._id)} className='my-btn'>
                     <i className="fas fa-trash"></i>
                   </button>
                 </div>
               </td>
-              <td>
+              <td className='cc-td'>
                 {editingChore && editingChore._id === chore._id ? (
                   <div className="modal1">
                     <button onClick={finishEditingChore}>
-            <i className="fas fa-check"></i>
-          </button>
-          <button onClick={handleModalClose}>
-            <i className="fas fa-times"></i>
-          </button>
+                      <i className="fas fa-check"></i>
+                    </button>
+                    <button onClick={handleModalClose}>
+                      <i className="fas fa-times"></i>
+                    </button>
                     <input
                       type="text"
                       value={editingChore.choreName}
                       onChange={(e) => setEditingChore({ ...editingChore, choreName: e.target.value })}
                     />
-                    
+
                   </div>
                 ) : (
                   <span>{chore.choreName}</span>
                 )}
               </td>
-              <td>
+              <td className='cc-td'> 
                 {editingChore && editingChore._id === chore._id ? (
                   <div>
                     <select defaultValue={editingChore.assignee ? editingChore.assignee : ''}
@@ -205,14 +206,14 @@ const ChoreChart = (props) => {
                     {chore.assignee ? (
                       members.find((member) => member._id === chore.assignee).username
                     ) : (
-                      'Not Assigned'
+                      'UnAssigned'
                     )}
                   </span>
                 )}
               </td>
-              <td>
+              <td className='cc-td'>
                 <button onClick={() => toggleChoreStatus(chore._id)}>
-                  {chore.completed ? 'Not Complete' : 'Complete'}
+                  {chore.completed ? 'Undo' : 'Done'}
                 </button>
               </td>
             </tr>
