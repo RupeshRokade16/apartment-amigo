@@ -63,6 +63,51 @@ async function userData(req, res) {
   }
 }
 
+//Update user information (email and username only)
+const updateUserData = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { username, email } = req.body;
+
+    //console.log("REACHED HERE")
+
+    if (!isValidUsername(username) || !isValidEmail(email)) {
+      return res.status(400).json({ message: 'Invalid username or email format' });
+    }
+    
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { username, email },
+      { new: true } // Return the updated document
+    );
+    
+    console.log("New user email and username", user.email, user.username)
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+//validation functions
+const isValidEmail = (email) => {
+  // Add your email validation logic here
+  // For example, you might use a regular expression to check the email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return typeof email === 'string' && emailRegex.test(email);
+};
+
+const isValidUsername = (username) => {
+  // Add your username validation logic here
+  // For example, you might check for a minimum length, maximum length, or specific character requirements
+  return typeof username === 'string' && username.length >= 3;
+};
+
 const router = express.Router();
 
 // Example of a protected route that checks if the token is valid
@@ -145,4 +190,4 @@ const createOrJoinHousehold = async (req, res) => {
   }
 };
 
-module.exports = { router, login, register, userData, createOrJoinHousehold };
+module.exports = { router, login, register, userData, createOrJoinHousehold, updateUserData };

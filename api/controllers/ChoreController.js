@@ -76,17 +76,19 @@ router.put('/households/:householdId/chores/:choreId', async (req, res) => {
   
   try {
     console.log("REQ body", req.body)
-    // const updatedChore = await Chore.findByIdAndUpdate(
-    //   req.params.choreId,
-    //   {choreName : choreName},
-    //   {assignee : assignee},
-    //   { new: true }
-    // );
+    const updatedChore = await Chore.findByIdAndUpdate(
+      req.params.choreId,
+      {choreName : choreName},
+      {assignee : assignee},
+      { new: true }
+    );
 
-    const currentChore = await Chore.findById(req.params.choreId);
+    // const currentChore = await Chore.findById(req.params.choreId);
 
-    currentChore.assignee = assignee;
-    currentChore.choreName = choreName;
+    // currentChore.assignee = assignee;
+    // currentChore.choreName = choreName;
+
+    // await currentChore.save();
 
     console.log("Updated chore" , currentChore)
     res.json(currentChore);
@@ -94,5 +96,29 @@ router.put('/households/:householdId/chores/:choreId', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+// router.put('/households/:householdId/chores/:choreId', async (req, res) => {
+//   const { choreName, assignee } = req.body;
+//   console.log("CHORE ID",req.params.choreId)
+//   try {
+//     console.log("CHORE ",req.body)
+//     const updatedChore = await Chore.findByIdAndUpdate(
+//       req.params.choreId,
+//       { choreName, assignee },
+//       { new: true }
+//     );
+
+//     if (!updatedChore) {
+//       return res.status(404).json({ message: 'Chore not found' });
+//     }
+
+//     console.log("Updated chore", updatedChore);
+//     res.json(updatedChore);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
+
 
 module.exports = router;
