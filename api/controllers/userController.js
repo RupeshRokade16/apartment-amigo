@@ -72,6 +72,8 @@ router.put('/users/:userId', async (req, res) => {
   }
 });
 
+
+
 // Delete a user
 router.delete('/users/:userId', async (req, res) => {
   try {
