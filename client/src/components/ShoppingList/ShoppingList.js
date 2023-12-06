@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ShoppingList.css'; // Import the CSS file
 import axios from 'axios';
+import backendUrlPrefix from '../../utils/backendUrlPrefix';
 
 const ShoppingList = (props) => {
   const [tasks, setTasks] = useState([]);
@@ -10,7 +11,7 @@ const ShoppingList = (props) => {
 
   const householdID = props.householdID;
   //const householdID='656dffd6e3baf8051351da1a'; //HARDCODED FOR NOW -- UPDATE DYNAMICALLY LATER
-  const backendApiUrl = `http://localhost:5000/households/${householdID}/tasks`; // Replace 'your_household_id'
+  const backendApiUrl = `${backendUrlPrefix}/households/${householdID}/tasks`; // Replace 'your_household_id'
 
   useEffect(() => {
     const fetchData = async () => {

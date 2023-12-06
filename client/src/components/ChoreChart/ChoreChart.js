@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ChoreChart.css'; // Import the CSS file
 import axios from 'axios';
+import backendUrlPrefix from '../../utils/backendUrlPrefix.js';
 
 const ChoreChart = (props) => {
   const [chores, setChores] = useState([]);
@@ -11,9 +12,9 @@ const ChoreChart = (props) => {
 
   const householdID = props.householdID;
   //const householdID = '656dffd6e3baf8051351da1a'; // HARDCODED FOR NOW -- UPDATE DYNAMICALLY LATER
-  const backendApiUrl = `http://localhost:5000/households/${householdID}/chores`; // Replace 'your_household_id'
+  const backendApiUrl = `${backendUrlPrefix}/households/${householdID}/chores`; // Replace 'your_household_id'
 
-
+console.log(backendApiUrl);
 
   // ...
 
@@ -21,7 +22,7 @@ const ChoreChart = (props) => {
     const fetchData = async () => {
       try {
         // Fetch household members instead of hardcoded 'users'
-        const membersResponse = await axios.get(`http://localhost:5000/households/${householdID}/members`);
+        const membersResponse = await axios.get(`${backendUrlPrefix}/households/${householdID}/members`);
         const householdMembers = membersResponse.data;
 
         const choresResponse = await axios.get(backendApiUrl);
