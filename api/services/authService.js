@@ -25,12 +25,18 @@ async function registerUser(username, email, password) {
   const newUser = new User({ username, email, password });
   await newUser.save();
 
+  console.log("USER AFTER REGISTRATION", newUser)
+
+  const token = jwt.sign({ userID: newUser._id }, "your_secret_key", {
+    expiresIn: "1h",
+  });
+
   // if (newUser.household === null){
   //   console.log("Null household")
   // } else {
   //   console.log("Non null", newUser.household)
   // }
-  return newUser;
+  return {newUser, token};
 }
 
 async function getUserData(headers) {

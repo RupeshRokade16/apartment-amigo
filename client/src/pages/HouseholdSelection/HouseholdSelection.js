@@ -84,7 +84,7 @@ const HouseholdSelection = () => {
               </Form.Label>
               <Form.Control
                 type="text"
-                placeholder={action === 'create' ? 'Household Name' : 'Household ID'}
+                placeholder={action === 'join' ? 'Household Name' : 'Household ID'}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
               />
