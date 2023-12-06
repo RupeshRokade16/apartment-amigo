@@ -4,7 +4,7 @@ import './Register.css';
 
 const Register = () => {
 
-  const backgroundImageUrl = '../../assets/images/signup-bg.png'; // Adjust the path based on your project structure
+  
   return (
     <div className="container">
       {/* Signup Form Section */}

@@ -4,12 +4,14 @@ import apiCaller from '../../utils/apiCaller';
 import AuthService from '../../services/authService';
 import ChoreChart from '../../components/ChoreChart/ChoreChart';
 import ShoppingList from '../../components/ShoppingList/ShoppingList';
+import UserNavbar from '../../components/User Navbar/UserNavbar';
 
 const UserDashboard = () => {
   const [userData, setUserData] = useState(null);
   const [redirect, setRedirect] = useState(false);
 
   const handleLogout = () => {
+    console.log("Handling logout")
     // Clear the token from localStorage
     AuthService.logout();
 
@@ -63,6 +65,7 @@ const UserDashboard = () => {
       <h2>User Dashboard</h2>
       {userData && (
         <div>
+          <UserNavbar user = {userData} handleLogout={handleLogout}/>
           <p>Welcome, {userData.username}!</p>
           <p>Household code, {userData.household}</p>
           <ChoreChart householdID={userData.household}/>
