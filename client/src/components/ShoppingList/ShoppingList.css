@@ -1,9 +1,8 @@
 /* ShoppingList.css */
 
 .shopping-list {
-    width: 350px;
+    width: 100%;
     margin: auto;
-    padding-top: 10px;
   }
   
   .add-task {
@@ -41,7 +40,7 @@
   
   table {
     width: 100%;
-    max-width: 400px;
+    max-width: 100%;
     border-collapse: collapse;
   }
   
@@ -68,6 +67,7 @@
   .completed {
     text-decoration: line-through;
     opacity: 0.7;
+    
   }
   
   td div button {
@@ -75,3 +75,6 @@
     cursor: pointer;
   }
   
+  thead{
+    text-align: center;
+  }

@@ -75,20 +75,20 @@ router.put('/households/:householdId/chores/:choreId', async (req, res) => {
   const {choreName, assignee} = req.body;
   
   try {
-    console.log("REQ body", req.body)
-    const updatedChore = await Chore.findByIdAndUpdate(
-      req.params.choreId,
-      {choreName : choreName},
-      {assignee : assignee},
-      { new: true }
-    );
+    // console.log("REQ body", req.body)
+    // const updatedChore = await Chore.findByIdAndUpdate(
+    //   req.params.choreId,
+    //   {choreName : choreName},
+    //   {assignee : assignee},
+    //   { new: true }
+    // );
 
-    // const currentChore = await Chore.findById(req.params.choreId);
+    const currentChore = await Chore.findById(req.params.choreId);
 
-    // currentChore.assignee = assignee;
-    // currentChore.choreName = choreName;
+    currentChore.assignee = assignee;
+    currentChore.choreName = choreName;
 
-    // await currentChore.save();
+    await currentChore.save();
 
     console.log("Updated chore" , currentChore)
     res.json(currentChore);

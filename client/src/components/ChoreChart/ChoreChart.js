@@ -13,31 +13,31 @@ const ChoreChart = (props) => {
   //const householdID = '656dffd6e3baf8051351da1a'; // HARDCODED FOR NOW -- UPDATE DYNAMICALLY LATER
   const backendApiUrl = `http://localhost:5000/households/${householdID}/chores`; // Replace 'your_household_id'
 
-  
+
 
   // ...
 
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      // Fetch household members instead of hardcoded 'users'
-      const membersResponse = await axios.get(`http://localhost:5000/households/${householdID}/members`);
-      const householdMembers = membersResponse.data;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch household members instead of hardcoded 'users'
+        const membersResponse = await axios.get(`http://localhost:5000/households/${householdID}/members`);
+        const householdMembers = membersResponse.data;
 
-      const choresResponse = await axios.get(backendApiUrl);
-      setChores(choresResponse.data);
+        const choresResponse = await axios.get(backendApiUrl);
+        setChores(choresResponse.data);
 
-      // Set household members to be used in the dropdown
-      setMembers(householdMembers);
-    } catch (error) {
-      console.error('Error fetching data from the backend:', error);
-    }
-  };
+        // Set household members to be used in the dropdown
+        setMembers(householdMembers);
+      } catch (error) {
+        console.error('Error fetching data from the backend:', error);
+      }
+    };
 
-  fetchData();
-}, [backendApiUrl, householdID]);
+    fetchData();
+  }, [backendApiUrl, householdID]);
 
-// ...
+  // ...
 
 
   const addChore = () => {
@@ -87,17 +87,23 @@ useEffect(() => {
   };
 
   const startEditingChore = (chore) => {
-    setEditingChore({ ...chore });
+    const assigneeId = chore.assignee ? chore.assignee : ''; // Use the _id of the assignee or an empty string
+  
+    setEditingChore({
+      ...chore,
+      assignee: assigneeId,
+    });
     setIsModalOpen(true);
   };
+  
 
   const finishEditingChore = () => {
     const updatedChoreData = {
       choreName: editingChore.choreName,
       // Send assignee as an object containing the _id
-      assignee: editingChore.assignee ? { _id: editingChore.assignee._id } : null,
+      assignee: editingChore.assignee ? editingChore.assignee : null,
     };
-  
+
     axios.put(`${backendApiUrl}/${editingChore._id}`, updatedChoreData)
       .then(response => {
         const updatedList = chores.map((chore) =>
@@ -108,12 +114,12 @@ useEffect(() => {
       .catch(error => {
         console.error('Error updating chore in the backend:', error);
       });
-  
+
     setEditingChore(null);
     setIsModalOpen(false);
   };
-  
-  
+
+
 
   const handleModalClose = () => {
     setEditingChore(null);
@@ -136,13 +142,13 @@ useEffect(() => {
         </div>
       </div>
       <table>
+        
         <tbody>
-          
           {chores.map((chore) => (
             <tr key={chore._id} className={chore.completed ? 'completed' : ''}>
               <td>
                 <div>
-                  <button onClick={() => startEditingChore(chore)}>
+                  <button onClick={() => startEditingChore(chore)} disabled={chore.completed}>
                     <i className="fas fa-pencil-alt"></i>
                   </button>
                   <button onClick={() => deleteChore(chore._id)}>
@@ -152,78 +158,77 @@ useEffect(() => {
               </td>
               <td>
                 {editingChore && editingChore._id === chore._id ? (
-                  <div className="modal">
+                  <div className="modal1">
+                    <button onClick={finishEditingChore}>
+            <i className="fas fa-check"></i>
+          </button>
+          <button onClick={handleModalClose}>
+            <i className="fas fa-times"></i>
+          </button>
                     <input
                       type="text"
                       value={editingChore.choreName}
                       onChange={(e) => setEditingChore({ ...editingChore, choreName: e.target.value })}
                     />
-                    <button onClick={finishEditingChore}>
-                      <i className="fas fa-check"></i>
-                    </button>
-                    <button onClick={handleModalClose}>
-                      <i className="fas fa-times"></i>
-                    </button>
+                    
                   </div>
                 ) : (
                   <span>{chore.choreName}</span>
                 )}
               </td>
               <td>
-              
+                {editingChore && editingChore._id === chore._id ? (
+                  <div>
+                    <select defaultValue={editingChore.assignee ? editingChore.assignee : ''}
+                      onChange={(e) => {
+                        const selectedMemberId = e.target.value;
+                        const selectedMember = members.find((member) => member._id === selectedMemberId);
 
-{editingChore && editingChore._id === chore._id ? (
-  // Edit mode - dropdown for assigning a user
-  <div>
-    <select
-      value={editingChore.assignee ? editingChore.assignee : ''}
-      onChange={(e) =>
-        setEditingChore({
-          ...editingChore,
-          assignee: members.find((member) => member._id === e.target.value) || null,
-        })
-      }
-    >
-      <option value="">Select Assignee</option>
-      {members.map((member) => (
-        <option key={member._id} value={member._id}>
-          {member.username}
-        </option>
-      ))}
-    </select>
-    <button onClick={finishEditingChore}>
-      Save
-    </button>
-    <button onClick={handleModalClose}>
-      Cancel
-    </button>
-  </div>
-) : (
-  // Display mode - show assigned user's name
- <span>
-    {chore.assignee ? (
-      members.find((member) => member._id === chore.assignee).username
-    ) : (
-      'Not Assigned'
-    )}
-  </span>
-)}
+                        setEditingChore({
+                          ...editingChore,
+                          assignee: selectedMember,
+                        });
+                      }}
+                    >
+                      <option value="" disabled>Select Assignee</option>
+                      {/* <option value="debugger">Debugger</option> */}
+                      {members.map((member) => (
+                        <option key={member._id} value={member._id}>
+                          {member.username}
+                        </option>
+                      ))}
+                    </select>
 
-
-
-
+                  </div>
+                ) : (
+                  <span>
+                    {chore.assignee ? (
+                      members.find((member) => member._id === chore.assignee).username
+                    ) : (
+                      'Not Assigned'
+                    )}
+                  </span>
+                )}
               </td>
-
               <td>
                 <button onClick={() => toggleChoreStatus(chore._id)}>
-                  {chore.completed ? 'Uncomplete' : 'Complete'}
+                  {chore.completed ? 'Not Complete' : 'Complete'}
                 </button>
               </td>
-              
             </tr>
           ))}
         </tbody>
       </table>
+      {/* {editingChore && (
+        <div>
+          <button onClick={finishEditingChore}>
+            <i className="fas fa-check"></i> Save
+          </button>
+          <button onClick={handleModalClose}>
+            <i className="fas fa-times"></i> Cancel
+          </button>
+        </div>
+      )} */}
     </div>
   );
 };

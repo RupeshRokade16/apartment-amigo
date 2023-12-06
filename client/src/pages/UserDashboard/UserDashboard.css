@@ -1,0 +1,10 @@
+/* UserDashboard.css */
+
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allows items to wrap to the next line on smaller screens */
+  }
+  
+  /* Adjust styling as needed */
+  
