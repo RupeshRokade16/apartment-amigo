@@ -7,6 +7,7 @@ import ShoppingList from '../../components/ShoppingList/ShoppingList';
 import UserNavbar from '../../components/User Navbar/UserNavbar';
 import CardLayout from '../../layouts/CardLayout/CardLayout';
 import './UserDashboard.css';
+import Members from '../../components/Members/Members';
 
 const UserDashboard = () => {
   const [userData, setUserData] = useState(null);
@@ -68,14 +69,18 @@ const UserDashboard = () => {
       {userData && (
         <div>
           <UserNavbar user = {userData} handleLogout={handleLogout}/>
-          <p>Welcome, {userData.username}!</p>
-          <p>Household code, {userData.household}</p>
+          <div className='details'>
+            <h3>WELCOME, {userData.username}!</h3>
+          </div>
           <div className="row">
             <div className="col-md-6">
               <CardLayout title={'Chore Chart'} content={<ChoreChart householdID={userData.household} />} />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
               <CardLayout title={'Shopping List'} content={<ShoppingList householdID={userData.household} />} />
+            </div>
+            <div className="col-md-2">
+              <CardLayout title={'Members'} content={<Members householdID={userData.household} />} />
             </div>
           </div>
 

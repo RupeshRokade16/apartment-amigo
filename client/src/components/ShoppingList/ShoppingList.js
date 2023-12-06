@@ -112,18 +112,18 @@ const ShoppingList = (props) => {
           </button>
         </div>
       </div>
-      <table>
+      <table className='sl-table'>
         <tbody>
           {tasks.map((task) => (
             <tr key={task._id} className={task.completed ? 'completed' : ''}>
-              <td>
+              <td className='sl-td'>
                 <input
                   type="checkbox"
                   checked={task.completed}
                   onChange={() => toggleTaskStatus(task._id)}
                 />
               </td>
-              <td>
+              <td className='sl-td'>
                 {editingTask && editingTask._id === task._id ? (
                   <div className="modal1">
                     <input
@@ -142,12 +142,12 @@ const ShoppingList = (props) => {
                   <span>{task.task}</span>
                 )}
               </td>
-              <td>
+              <td className='sl-td'>
                 <div>
-                  <button onClick={() => startEditingTask(task)} disabled={task.completed}>
+                  <button onClick={() => startEditingTask(task)} disabled={task.completed} className='my-btn edit-btn'>
                     <i className="fas fa-pencil-alt" ></i>
                   </button>
-                  <button onClick={() => deleteTask(task._id)}>
+                  <button onClick={() => deleteTask(task._id)} className='my-btn'>
                     <i className="fas fa-trash"></i>
                   </button>
                 </div>
