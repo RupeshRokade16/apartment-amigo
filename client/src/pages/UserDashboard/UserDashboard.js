@@ -65,9 +65,11 @@ const UserDashboard = () => {
 
   return (
     <div>
-      <h2>User Dashboard</h2>
+      
       {userData && (
+        
         <div>
+          <h2 id='topNav'>{userData.username}'s Dashboard</h2>
           <UserNavbar user = {userData} handleLogout={handleLogout}/>
           <div className='details'>
             <h3>WELCOME, {userData.username}!</h3>
@@ -88,7 +90,7 @@ const UserDashboard = () => {
 
           
           {/* Render other user dashboard content */}
-          <button onClick={handleLogout}>Logout</button>
+          {/* <button onClick={handleLogout}>Logout</button> */}
         </div>
       )}
     </div>

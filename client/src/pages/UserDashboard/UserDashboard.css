@@ -14,4 +14,8 @@
   }
   
   /* Adjust styling as needed */
-  
+  #topNav{
+    background-color: #2A2F4F;
+    color:white;
+    font-style: none;
+}
