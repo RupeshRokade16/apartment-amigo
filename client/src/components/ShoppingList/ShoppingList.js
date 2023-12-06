@@ -124,7 +124,7 @@ const ShoppingList = (props) => {
               </td>
               <td>
                 {editingTask && editingTask._id === task._id ? (
-                  <div className="modal">
+                  <div className="modal1">
                     <input
                       type="text"
                       value={editingTask.task}
@@ -143,8 +143,8 @@ const ShoppingList = (props) => {
               </td>
               <td>
                 <div>
-                  <button onClick={() => startEditingTask(task)}>
-                    <i className="fas fa-pencil-alt"></i>
+                  <button onClick={() => startEditingTask(task)} disabled={task.completed}>
+                    <i className="fas fa-pencil-alt" ></i>
                   </button>
                   <button onClick={() => deleteTask(task._id)}>
                     <i className="fas fa-trash"></i>

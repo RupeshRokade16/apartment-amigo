@@ -5,6 +5,8 @@ import AuthService from '../../services/authService';
 import ChoreChart from '../../components/ChoreChart/ChoreChart';
 import ShoppingList from '../../components/ShoppingList/ShoppingList';
 import UserNavbar from '../../components/User Navbar/UserNavbar';
+import CardLayout from '../../layouts/CardLayout/CardLayout';
+import './UserDashboard.css';
 
 const UserDashboard = () => {
   const [userData, setUserData] = useState(null);
@@ -68,8 +70,17 @@ const UserDashboard = () => {
           <UserNavbar user = {userData} handleLogout={handleLogout}/>
           <p>Welcome, {userData.username}!</p>
           <p>Household code, {userData.household}</p>
-          <ChoreChart householdID={userData.household}/>
-          <ShoppingList householdID={userData.household}/>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLayout title={'Chore Chart'} content={<ChoreChart householdID={userData.household} />} />
+            </div>
+            <div className="col-md-6">
+              <CardLayout title={'Shopping List'} content={<ShoppingList householdID={userData.household} />} />
+            </div>
+          </div>
+
+
+          
           {/* Render other user dashboard content */}
           <button onClick={handleLogout}>Logout</button>
         </div>
