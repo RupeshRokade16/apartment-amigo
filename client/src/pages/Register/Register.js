@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Navigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import "./Register.css";
 import AuthService from "../../services/authService";
 
@@ -208,7 +208,7 @@ const Register = () => {
             </button>
             <br />
             <br />
-            <a href="login.html">Already an Amigo? Login here</a>
+            <Link to="/login">Already an Amigo? Login here</Link>
           </div>
         </form>
       </div>
