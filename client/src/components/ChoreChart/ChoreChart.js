@@ -209,7 +209,7 @@ const ChoreChart = (props) => {
                   </div>
                 ) : (
                   <span>
-                    {chore.assignee ? (
+                    {chore.assignee && members.some((member) => member._id === chore.assignee)? (
                       members.find((member) => member._id === chore.assignee).username
                     ) : (
                       'UnAssigned'
