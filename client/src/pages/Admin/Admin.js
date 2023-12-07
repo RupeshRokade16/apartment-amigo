@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
+import AuthService from '../../services/authService';
 
 const Admin = () => {
   const [totalUsers, setTotalUsers] = useState(0);
@@ -34,8 +35,27 @@ const Admin = () => {
       }
     };
 
+    const fetchTotalUsersAndHouseholds = async () => {
+      try {
+        const users = await AuthService.getTotalUsers();
+
+        setTotalUsers(users);
+
+        console.log("Front end", users);
+
+        const households = await AuthService.getTotalHouseholds();
+
+        setTotalHouseholds(households);
+      } catch (error) {
+        console.error('Error fetching total users and households:', error);
+      }
+    };
+
     checkExistingToken();
-  }, []); // Empty dependency array ensures it runs only once on mount
+    fetchTotalUsersAndHouseholds();
+  }, []);
+
+  
 
   // Use the Navigate component directly instead of returning it from the render function
   if (redirectToLogin) {

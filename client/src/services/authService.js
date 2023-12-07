@@ -44,6 +44,8 @@ const AuthService = {
     }
   },
 
+  //Admin Feature
+
   getTotalUsers: async () => {
     try {
       const token = localStorage.getItem('token');
@@ -58,12 +60,15 @@ const AuthService = {
       };
   
       const response = await apiCaller.get('/api/admin/totalUsers', { headers });
-      return response.data.totalUsers; // Adjust the response structure based on your API
+      //console.log("Admin response", response.json);
+      return response.data; // Adjust the response structure based on your API
     } catch (error) {
       console.error('Error fetching total users:', error);
       throw error;
     }
   },
+
+  //Admin Feature
 
   getTotalHouseholds: async () => {
     try {
@@ -79,12 +84,14 @@ const AuthService = {
       };
   
       const response = await apiCaller.get('/api/admin/totalHouseholds', { headers });
-      return response.data.totalHouseholds; // Adjust the response structure based on your API
+      return response.data; // Adjust the response structure based on your API
     } catch (error) {
       console.error('Error fetching total households:', error);
       throw error;
     }
   },
+
+  //Admin Feature
 
   getHouseholdMembers: async (householdId) => {
     try {
@@ -99,13 +106,17 @@ const AuthService = {
         'Content-Type': 'application/json',
       };
   
+      //use userController and decide if you want to send token or no
       const response = await apiCaller.get(`/api/admin/householdMembers/${householdId}`, { headers });
+      console.log(response.data);
       return response.data.householdMembers; // Adjust the response structure based on your API
     } catch (error) {
       console.error('Error fetching household members:', error);
       throw error;
     }
   },
+
+  //Admin Feature
 
   removeMemberFromHousehold: async (householdId, memberId) => {
     try {

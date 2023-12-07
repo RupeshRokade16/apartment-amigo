@@ -10,6 +10,8 @@ router.post('/register',authController.register);
 router.get('/userData',authMiddleware, authController.userData);
 router.post('/household', authMiddleware, authController.createOrJoinHousehold);
 router.put('/userData/:userId', authMiddleware, authController.updateUserData);
+router.get('/admin/totalUsers', authController.getAllUsers);
+router.get('/admin/totalHouseholds', authController.getAllHouseholds);
 
 
 module.exports = router;

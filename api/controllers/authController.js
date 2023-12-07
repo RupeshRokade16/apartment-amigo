@@ -111,6 +111,48 @@ const updateUserData = async (req, res) => {
   }
 };
 
+  const getAllUsers = async (req,res) => {
+
+    //Since it doesnt pass through middleware, check token
+    const token = req.headers.authorization?.split(' ')[1];
+
+    if (!token || token!="fakeToken") {
+      return res.status(401).json({ message: 'Unauthorized: Token missing' });
+    }
+
+    try{
+    const users = await User.find();
+    var length = Object.keys(users).length;
+    //console.log("Total users Array", users, length);
+  res.status(200).json(length)  
+  } catch (error) {
+    console.error('Error fetching all users:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  } 
+
+  }
+
+  const getAllHouseholds = async (req,res) => {
+
+    //Since it doesnt pass through middleware, check token
+    const token = req.headers.authorization?.split(' ')[1];
+
+    if (!token || token!="fakeToken") {
+      return res.status(401).json({ message: 'Unauthorized: Token missing' });
+    }
+
+    try{
+    const households = await Household.find();
+    var length = Object.keys(households).length;
+    console.log("Total users Array", households, length);
+  res.status(200).json(length)  
+  } catch (error) {
+    console.error('Error fetching all users:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  } 
+
+  }
+
 //validation functions
 const isValidEmail = (email) => {
   // Add your email validation logic here
@@ -237,4 +279,6 @@ module.exports = {
   userData,
   createOrJoinHousehold,
   updateUserData,
+  getAllUsers,
+  getAllHouseholds,
 };
