@@ -134,12 +134,12 @@ const UserProfile = (props) => {
   }
 
   return (
-    
+
     <>
       <div className="card">
         <div className="card-body">
           <img src={image} className="card-img-top" alt="User Avatar" />
-          <h1 className="card-title">
+          <h1 className="card-titleUser">
             <b>
               {editMode ? (
                 <input
@@ -147,7 +147,7 @@ const UserProfile = (props) => {
                   value={editedUsername}
                   onChange={(e) => setEditedUsername(e.target.value)}
                   placeholder="Type your new username"
-                  style={{color:'black'}}
+                  style={{ color: 'black' }}
                 />
               ) : (
                 userData.username
@@ -207,9 +207,9 @@ const UserProfile = (props) => {
         </div>
       </div>
     </>
-      
-      
-    
+
+
+
   );
 };
 

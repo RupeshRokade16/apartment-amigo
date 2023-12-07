@@ -25,7 +25,7 @@ const About = () => {
     {
       imageUrl: aakansha,
       title: 'Aakansha Desai',
-      description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' ,
+      description:'Connecting, collaborating, and creating are at the heart of who I am. Driven by a relentless curiosity and a passion for continuous growth, I embrace new challenges and eagerly seek opportunities to learn, create, and leave a lasting impact. I keep looking for opportunities for creative expression, be it through art or writing code. I have a keen interest in software development and cloud operations. I enjoy witnessing the entire product lifecycle, from development to deployment and operations, and I aspire to contribute to this holistic process in future roles.' ,
     },
    
     
