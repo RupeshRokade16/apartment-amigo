@@ -1,6 +1,4 @@
 import React from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
 
 import "./UserNavbar.css";
@@ -18,15 +16,18 @@ const UserNavbar = (props) => {
         <li>
           <Link
             to={{ pathname: userProfilePath, state: { user } }}
-            className="site-title"
-          >
-            Profile {}
+            
+          ><div className="navBlock">
+          <p className="site-title">PROFILE</p>
+        </div>
           </Link>
         </li>
         <li>
           {/* You can also pass props in a similar way for other Links */}
           <Link to="#" className={"link"} onClick={handleLogout}>
-            Logout
+          <div className="navBlock">
+              <p className="site-title">LOG OUT</p>
+            </div>
           </Link>
         </li>
       </ul>

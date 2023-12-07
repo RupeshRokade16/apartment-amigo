@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import AuthService from '../../services/authService';
+import './Login.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -74,26 +75,39 @@ const Login = () => {
   }
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className='outer-login-container'>
+    <div className='login-container'>
+      <h2 className='text-center mb-4' id="loginTitle">Login</h2>
       <form>
-        <label>
-          Username:
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <div className='mb-3'>
+        <label htmlFor='username' className='form-label'>
+          Username
+          </label>
+          <input type="text" className="form-control" id="username" placeholder="Enter your username" value={username} onChange={(e) => setUsername(e.target.value)} />
+        </div>
+      <div className='mb-3'>
+        <label htmlFor="password" className="form-label">
+          Password
         </label>
-        <br />
-        <label>
-          Password:
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </label>
-        <br />
-        <button type="button" onClick={handleLogin} disabled={isLoading}>
+          <input type="password" className="form-control" id="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      </div>
+      <br></br>
+      <div className='mb-3' >
+        <button type="button" id="loginBox" className="btn btn-primary btn-block" onClick={handleLogin} disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
+      </div>
       </form>
+
+      <div className='mt-3 text-center'>
+        <Link to="/register" className='signUpButton'>Sign Up</Link>
+      </div>
       {error && <p style={{ color: 'red' }}>{error}</p>}
+    </div>
     </div>
   );
 };
+
+
 
 export default Login;

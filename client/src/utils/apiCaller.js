@@ -1,7 +1,8 @@
 import axios from 'axios';
+import backendUrlPrefix from './backendUrlPrefix.js';
 
 const apiCaller = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: backendUrlPrefix,
 });
 
 export default apiCaller;

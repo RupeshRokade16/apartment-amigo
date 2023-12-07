@@ -27,15 +27,30 @@ async function login(req, res) {
 
 async function register(req, res) {
   const { username, email, password } = req.body;
+  console.log("Here1")
+  //Validation check
+  const errors = validateRegistrationInput(username, email, password);
+  console.log("post validation")
+  if (Object.keys(errors).length > 0) {
+    res.status(400).json({ message: "Validation Error", errors });
+    return;
+  }
 
   try {
+    console.log("inside try")
     const newUser = await authService.registerUser(username, email, password);
+    console.log("After awaiting register")
     res.status(201).json({ message: "Registration successful", user: newUser });
   } catch (error) {
     if (error.name === "ValidationError") {
       res
         .status(400)
         .json({ message: "Validation Error", errors: error.errors });
+    } else if (error.name === "MongoServerError" && error.code === 11000) {
+      // Duplicate key error (username already exists)
+      res
+        .status(400)
+        .json({ message: "User already exists with this username or email" });
     } else {
       console.error(error);
       res.status(500).json({ message: "Encountered server error" });
@@ -72,41 +87,111 @@ const updateUserData = async (req, res) => {
     //console.log("REACHED HERE")
 
     if (!isValidUsername(username) || !isValidEmail(email)) {
-      return res.status(400).json({ message: 'Invalid username or email format' });
+      return res
+        .status(400)
+        .json({ message: "Invalid username or email format" });
     }
-    
+
     const user = await User.findByIdAndUpdate(
       userId,
       { username, email },
       { new: true } // Return the updated document
     );
-    
-    console.log("New user email and username", user.email, user.username)
+
+    console.log("New user email and username", user.email, user.username);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     res.json({ user });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+  const getAllUsers = async (req,res) => {
+
+    //Since it doesnt pass through middleware, check token
+    const token = req.headers.authorization?.split(' ')[1];
+
+    if (!token || token!="fakeToken") {
+      return res.status(401).json({ message: 'Unauthorized: Token missing' });
+    }
+
+    try{
+    const users = await User.find();
+    var length = Object.keys(users).length;
+    //console.log("Total users Array", users, length);
+  res.status(200).json(length)  
+  } catch (error) {
+    console.error('Error fetching all users:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  } 
+
+  }
+
+  const getAllHouseholds = async (req,res) => {
+
+    //Since it doesnt pass through middleware, check token
+    const token = req.headers.authorization?.split(' ')[1];
+
+    if (!token || token!="fakeToken") {
+      return res.status(401).json({ message: 'Unauthorized: Token missing' });
+    }
+
+    try{
+    const households = await Household.find();
+    var length = Object.keys(households).length;
+    //console.log("Total users Array", households, length);
+    res.status(200).json(length)  
+  } catch (error) {
+    console.error('Error fetching all users:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  } 
+
+  }
 
 //validation functions
 const isValidEmail = (email) => {
   // Add your email validation logic here
   // For example, you might use a regular expression to check the email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return typeof email === 'string' && emailRegex.test(email);
+  return typeof email === "string" && emailRegex.test(email);
 };
 
 const isValidUsername = (username) => {
   // Add your username validation logic here
   // For example, you might check for a minimum length, maximum length, or specific character requirements
-  return typeof username === 'string' && username.length >= 3;
+  return typeof username === "string" && username.length >= 3;
 };
+
+function validateRegistrationInput(username, email, password) {
+  const errors = {};
+
+  // Username validation
+  if (!username || typeof username !== "string") {
+    errors.username = "Username is required and must be a string";
+  } else if (username.length < 3) {
+    errors.username = "Username must be at least 3 characters long";
+  }
+
+  // Email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email || typeof email !== "string" || !emailRegex.test(email)) {
+    errors.email = "Email is required and must be a valid email address";
+  }
+
+  // Password validation
+  if (!password || typeof password !== "string") {
+    errors.password = "Password is required and must be a string";
+  } else if (password.length < 6) {
+    errors.password = "Password must be at least 6 characters long";
+  }
+
+  return errors;
+}
 
 const router = express.Router();
 
@@ -120,42 +205,40 @@ const createOrJoinHousehold = async (req, res) => {
   try {
     //console.log("!")
     const result = await authService.getUserData(req.headers);
-    
+
     const { action, inputValue } = req.body;
-    //console.log("---------------" ,result);
-    //console.log("XXXXXXXXX")
-    const userId = req.userId // Assuming you have middleware setting userId in the request
-    //console.log("USERID - ",userId)
-    // Check the action (create or join) and perform the corresponding logic
+
+    const userId = req.userId; // Assuming you have middleware setting userId in the request
+
+    const user = await User.findById(userId);
+
+    const oldHousehold = await Household.findById(user.household);
+
+    
+
     if (action === "create") {
       // Create a new household
       const newHousehold = new Household({
         name: inputValue,
-        members : [userId]
+        members: [userId],
       });
-      
+
       await newHousehold.save();
 
-      const user = await User.findById(userId);
-      //console.log("Household object" ,newHousehold);
-      
-      //console.log("Before" ,userId)
-      // Update the user with the new household ID
-      // const user = await User.findByIdAndUpdate(userId, {
-      //   household: newHousehold._id,
-      // });
+      if (oldHousehold) {
+        oldHousehold.members = oldHousehold.members.filter(memberId => memberId.toString() !== userId);
+        await oldHousehold.save();
+      }
 
       user.household = newHousehold._id;
       await user.save();
 
-      console.log("user ",user)
+      console.log("user ", user);
 
-      res
-        .status(200)
-        .json({
-          message: "Household created successfully",
-          household: newHousehold,
-        });
+      res.status(200).json({
+        message: "Household created successfully",
+        household: newHousehold,
+      });
     } else if (action === "join") {
       // Join an existing household
       const household = await Household.findById(inputValue);
@@ -164,19 +247,18 @@ const createOrJoinHousehold = async (req, res) => {
         return res.status(404).json({ message: "Household not found" });
       }
 
+      if (oldHousehold) {
+        oldHousehold.members = oldHousehold.members.filter(memberId => memberId.toString() !== userId);
+        await oldHousehold.save();
+      }
+
       // Add the user to the household members
       household.members.push(userId);
       await household.save();
 
-      // Update the user with the new household ID
-      // const user = await User.findByIdAndUpdate(userId, {
-      //   household: household._id,
- //     });
-
       const user = await User.findById(userId);
       user.household = household._id;
-      await household.save();
-
+      await user.save();
 
       res
         .status(200)
@@ -190,4 +272,13 @@ const createOrJoinHousehold = async (req, res) => {
   }
 };
 
-module.exports = { router, login, register, userData, createOrJoinHousehold, updateUserData };
+module.exports = {
+  router,
+  login,
+  register,
+  userData,
+  createOrJoinHousehold,
+  updateUserData,
+  getAllUsers,
+  getAllHouseholds,
+};
