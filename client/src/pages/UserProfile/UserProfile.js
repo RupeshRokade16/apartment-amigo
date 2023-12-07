@@ -136,10 +136,10 @@ const UserProfile = (props) => {
   return (
     
     <>
-      <div className="card">
-        <div className="card-body">
-          <img src={image} className="card-img-top" alt="User Avatar" />
-          <h1 className="card-title">
+      <div className="cardUser">
+        <div className="card-body-user">
+          <img src={image} className="card-img-top-user" alt="User Avatar" />
+          <h1 className="card-titleUser">
             <b>
               {editMode ? (
                 <input
@@ -154,7 +154,7 @@ const UserProfile = (props) => {
               )}
             </b>
           </h1>
-          <p className="card-text">
+          <p className="card-text-user-user">
             Your Email:{" "}
             {editMode ? (
               <input
@@ -167,7 +167,7 @@ const UserProfile = (props) => {
               userData.email
             )}
           </p>
-          <p className="card-text">
+          <p className="card-text-user">
             You belong to the <b>{household.name}</b> household
           </p>
 
@@ -179,29 +179,29 @@ const UserProfile = (props) => {
                   editedUsername === userData.username &&
                   editedEmail === userData.email
                 }
-                className="btn btn-primary"
+                className="btn-user btn-primary-user"
               >
                 Save
               </button>
               <button
                 onClick={handleCancel}
-                className="btn btn-secondary ml-2"
+                className="btn-user btn-secondary-user ml-2"
               >
                 Cancel
               </button>
             </>
           ) : (
-            <button onClick={handleEdit} className="btn btn-primary">
+            <button onClick={handleEdit} className="btn-user btn-primary-user">
               Edit
             </button>
           )}
 
-          <button onClick={navigateToDashboard} className="btn btn-info ml-2">
+          <button onClick={navigateToDashboard} className="btn-user btn-info-user ml-2">
             Dashboard
           </button>
 
-          <p className="card-text">Want to change household?</p>
-          <Link to="/householdSelection" className="btn btn-link">
+          <p className="card-text-user">Want to change household?</p>
+          <Link to="/householdSelection" className="btn-user btn-link-user">
             Click Here
           </Link>
         </div>
