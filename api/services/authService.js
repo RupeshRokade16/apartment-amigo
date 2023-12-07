@@ -1,12 +1,12 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-
+const bcrypt = require('bcrypt');
 
 async function loginUser(username, password) {
   const user = await User.findOne({ username, password });
 
-  //const passwordMatch = await bcrypt.compare(password, user.password);
-  const passwordMatch = password === user.password;
+  const passwordMatch = await bcrypt.compare(password, user.password);
+  //const passwordMatch = password === user.password;
 
   if (user && passwordMatch) {
     //User authenticated, generate token
@@ -22,7 +22,8 @@ async function loginUser(username, password) {
 }
 
 async function registerUser(username, email, password) {
-  const newUser = new User({ username, email, password });
+  const HashedPassword = bcrypt.hash(password);
+  const newUser = new User({ username, email, HashedPassword });
   await newUser.save();
 
   console.log("USER AFTER REGISTRATION", newUser)
