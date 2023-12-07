@@ -1,5 +1,13 @@
 /* UserDashboard.css */
-
+.body {
+  margin: 0;
+  padding: 0;
+  background: url('../../assets/images/dashboard-bg.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat;
+ 
+}
 .card-container {
     display: flex;
     justify-content: space-between;

@@ -8,6 +8,8 @@ import UserNavbar from '../../components/User Navbar/UserNavbar';
 import CardLayout from '../../layouts/CardLayout/CardLayout';
 import './UserDashboard.css';
 import Members from '../../components/Members/Members';
+import DocumentList from '../../components/Document/DocumentList';
+import FileUpload from '../../components/Document/FileUpload';
 
 const UserDashboard = () => {
   const [userData, setUserData] = useState(null);
@@ -64,7 +66,7 @@ const UserDashboard = () => {
   }
 
   return (
-    <div>
+    <div className='body'>
       
       {userData && (
         
@@ -86,6 +88,16 @@ const UserDashboard = () => {
             </div>
             <div className="col-md-4">
               <CardLayout title={'Shopping List'} content={<ShoppingList householdID={userData.household} />} />
+            </div>
+            <div className="col-md-4">
+              <CardLayout title={'Shopping List'} content={<ShoppingList householdID={userData.household} />} />
+              
+            </div>
+            <div className="col-md-4">
+              <CardLayout title={'Document List'} content={<DocumentList householdID={userData.household} />} />
+            </div>
+            <div className="col-md-4">
+              <CardLayout title={'File Upload'} content={<FileUpload householdID={userData.household} />} />
             </div>
            
           </div>
