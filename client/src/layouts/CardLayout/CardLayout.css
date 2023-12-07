@@ -1,6 +1,6 @@
 /* CardLayout.css */
 
-.card-layout {
+.card-layout1{
   border: 1px solid black;
   box-shadow: 10px 10px 10px 10px #2a2f4f8b;
   border-radius: 10px;
@@ -10,7 +10,7 @@
   height: 100%; /* Set a fixed height for the card */
 }
 
-.card-title {
+.card-title1{
   background: #917FB3;
   border-radius: 10px 10px 0 0;
   color: #fff;
@@ -18,7 +18,7 @@
   padding: 10px;
 }
 
-.card-content {
+.card-content1{
   background: #e5beec87;
   border-radius: 0 0 10px 10px;
   padding: 15px;
