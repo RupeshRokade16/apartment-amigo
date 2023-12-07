@@ -1,10 +1,19 @@
-const express = require("express");
+const express = require('express');
+const axios = require('axios'); 
 const app = express();
 const router = express.Router();
 const User = require("../models/userModel");
 const Household = require("../models/householdModel");
 const dotenv = require("dotenv");
 dotenv.config();
+const ElasticEmail = require('@elasticemail/elasticemail-client');
+const client = ElasticEmail.ApiClient.instance;
+const apikey = client.authentications['apikey'];
+apikey.apiKey = process.env.YOUR_API_KEY;
+const templatesApi = new ElasticEmail.TemplatesApi();
+const emailsApi = new ElasticEmail.EmailsApi();
+
+
 
 // const postmark = require('postmark');
 
@@ -51,7 +60,10 @@ router.post("/users", async (req, res) => {
 
     const newUser = new User({ username, email, password });
     await newUser.save();
-    sendRegistrationEmail(email);
+
+    sendEmail(email)
+  .then(() => console.log('Email sent successfully to', email))
+  .catch((error) => console.error('Failed to send email:', error));
 
     res
       .status(201)
