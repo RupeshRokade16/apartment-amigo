@@ -79,20 +79,20 @@ const Login = () => {
     <div className='login-container'>
       <h2 className='text-center mb-4' id="loginTitle">Login</h2>
       <form>
-        <div className='mb-3'>
+        <div className='loginmb mb-3'>
         <label htmlFor='username' className='form-label'>
           Username
           </label>
           <input type="text" className="form-control" id="username" placeholder="Enter your username" value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>
-      <div className='mb-3'>
+      <div className='loginmb mb-3'>
         <label htmlFor="password" className="form-label">
           Password
         </label>
           <input type="password" className="form-control" id="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} />
       </div>
       <br></br>
-      <div className='mb-3' >
+      <div className='loginmb mb-3' >
         <button type="button" id="loginBox" className="btn btn-primary btn-block" onClick={handleLogin} disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
