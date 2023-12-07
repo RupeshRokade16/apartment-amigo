@@ -126,7 +126,7 @@ const Register = () => {
   }
 
   return (
-    <div className="container">
+    <div className="reg-container">
       {/* Signup Form Section */}
       <div className="form-container col-sm-12 col-md-6">
         <form id="signupForm">

@@ -27,17 +27,19 @@ async function login(req, res) {
 
 async function register(req, res) {
   const { username, email, password } = req.body;
-
+  console.log("Here1")
   //Validation check
   const errors = validateRegistrationInput(username, email, password);
-
+  console.log("post validation")
   if (Object.keys(errors).length > 0) {
     res.status(400).json({ message: "Validation Error", errors });
     return;
   }
 
   try {
+    console.log("inside try")
     const newUser = await authService.registerUser(username, email, password);
+    console.log("After awaiting register")
     res.status(201).json({ message: "Registration successful", user: newUser });
   } catch (error) {
     if (error.name === "ValidationError") {

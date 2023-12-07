@@ -11,7 +11,7 @@ body {
     color: rgba(0, 128, 0, 0.635)
   }
 
-  .container {
+  .reg-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -71,7 +71,7 @@ body {
   }
   
   @media (max-width: 768px) {
-    .container {
+    .reg-container {
       flex-direction: column-reverse; /* Stack columns on small screens, image below the form */
     }
   
