@@ -14,8 +14,8 @@ const Features = () => {
   const cardData = [
     {
       imageUrl: homeImage,
-      title: 'Splitwise Integration',
-      description: 'Effortlessly manage shared expenses with our Splitwise Integration feature. Seamlessly connect with Splitwise to track and split bills, shared expenses, and financial obligations within your living space. Simplify financial coordination, promote transparency, and ensure everyone contributes fairly to shared costs, creating a harmonious and stress-free living environment.',
+      title: 'Document sharing system',
+      description: 'Experience seamless collaboration with our Document Sharing System. Effortlessly share, organize, and access important documents within your living space. Enhance communication and coordination as you securely upload, manage, and retrieve files, ensuring that everyone in your community stays informed and connected. Simplify document workflows, reduce clutter, and foster a more efficient and organized living environment.',
     
     },
     {
@@ -48,7 +48,7 @@ const Features = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Item className="nav-item px-1">
-              <Nav.Link as={Link} to="/home">
+              <Nav.Link as={Link} to="/">
                 Discover
               </Nav.Link>
             </Nav.Item>

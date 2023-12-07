@@ -43,7 +43,7 @@ const About = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Item className="nav-item px-1">
-              <Nav.Link as={Link} to="/home">
+              <Nav.Link as={Link} to="/">
                 Discover
               </Nav.Link>
             </Nav.Item>
@@ -57,7 +57,11 @@ const About = () => {
                 About
               </Nav.Link>
             </Nav.Item>
-            
+            <Nav.Item className="nav-item px-1">
+              <Nav.Link as={Link} to="/contact">
+                Contact Us
+              </Nav.Link>
+            </Nav.Item>
           </Nav>
           <Link to="/login" className="btn btn-light px-4" id="loginButton">
             Login
