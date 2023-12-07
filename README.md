@@ -48,7 +48,6 @@ Welcome to **Apartment Amigo**, a collaborative household management platform bu
 ### External Email APIs
 
 - **@elasticemail/elasticemail-client**
-- **@mailchimp/mailchimp_marketing**
 - **axios** (used for external API requests)
 - **postmark**
 - **sendinblue-api**
@@ -67,7 +66,7 @@ Welcome to **Apartment Amigo**, a collaborative household management platform bu
 
 ## Installation
 
-1. Clone the repository: `git clone https://github.com/yourusername/apartment-amigo.git`
+1. Clone the repository: `git clone https://github.com/RupeshRokade16/apartment-amigo.git'
 2. Navigate to the project folder: `cd apartment-amigo`
 3. Install dependencies: `npm install`
 4. Set up environment variables in configure.env.
