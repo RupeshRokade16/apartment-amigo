@@ -20,11 +20,11 @@ const Home = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">
-            <Nav.Item className="nav-item px-1">
+            {/* <Nav.Item className="nav-item px-1">
               <Nav.Link as={Link} to="#">
                 Discover
               </Nav.Link>
-            </Nav.Item>
+            </Nav.Item> */}
             <Nav.Item className="nav-item px-1">
               <Nav.Link as={Link} to="/features">
                 Features
