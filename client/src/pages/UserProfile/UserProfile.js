@@ -134,69 +134,82 @@ const UserProfile = (props) => {
   }
 
   return (
+    
     <>
       <div className="card">
-        <img
-          src={image}
-          className="img-fluid image"
-          style={{ width: "100%" }}
-        />
-
-        <h1>
-          <b>
+        <div className="card-body">
+          <img src={image} className="card-img-top" alt="User Avatar" />
+          <h1 className="card-title">
+            <b>
+              {editMode ? (
+                <input
+                  type="text"
+                  value={editedUsername}
+                  onChange={(e) => setEditedUsername(e.target.value)}
+                  placeholder="Type your new username"
+                  style={{color:'black'}}
+                />
+              ) : (
+                userData.username
+              )}
+            </b>
+          </h1>
+          <p className="card-text">
+            Your Email:{" "}
             {editMode ? (
               <input
                 type="text"
-                value={editedUsername}
-                onChange={(e) => setEditedUsername(e.target.value)}
+                value={editedEmail}
+                onChange={(e) => setEditedEmail(e.target.value)}
+                placeholder="Type your new email"
               />
             ) : (
-              userData.username
+              userData.email
             )}
-          </b>
-        </h1>
-        <p>
-          Your Email:{" "}
+          </p>
+          <p className="card-text">
+            You belong to the <b>{household.name}</b> household
+          </p>
+
           {editMode ? (
-            <input
-              type="text"
-              value={editedEmail}
-              onChange={(e) => setEditedEmail(e.target.value)}
-            />
+            <>
+              <button
+                onClick={handleSave}
+                disabled={
+                  editedUsername === userData.username &&
+                  editedEmail === userData.email
+                }
+                className="btn btn-primary"
+              >
+                Save
+              </button>
+              <button
+                onClick={handleCancel}
+                className="btn btn-secondary ml-2"
+              >
+                Cancel
+              </button>
+            </>
           ) : (
-            userData.email
-          )}
-        </p>
-
-        <p>
-          You belong to the <b>{household.name}</b> household
-        </p>
-
-        {editMode ? (
-          <>
-            <button
-              onClick={handleSave}
-              disabled={
-                editedUsername === userData.username &&
-                editedEmail === userData.email
-              }
-            >
-              Save
+            <button onClick={handleEdit} className="btn btn-primary">
+              Edit
             </button>
-            <button onClick={handleCancel}>Cancel</button>
-          </>
-        ) : (
-          <button onClick={handleEdit}>Edit</button>
-        )}
+          )}
 
-        <button onClick={navigateToDashboard}>Dashboard</button>
+          <button onClick={navigateToDashboard} className="btn btn-info ml-2">
+            Dashboard
+          </button>
 
-        <p>Want to change household?</p>
-        <Link to="/householdSelection">Click Here</Link>
+          <p className="card-text">Want to change household?</p>
+          <Link to="/householdSelection" className="btn btn-link">
+            Click Here
+          </Link>
+        </div>
       </div>
-      
-      
     </>
+      
+      
+    
   );
 };
 
