@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Navbar, Nav, Row, Col, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import './About.css'; 
+import './About.css';
 import rupesh from '../../assets/images/rupesh.jpg';
 import chiemela from '../../assets/images/chiemela.jpg';
 import aakansha from '../../assets/images/aakansha.jpg';
@@ -15,7 +15,7 @@ const About = () => {
       imageUrl: rupesh,
       title: 'Rupesh Rokade',
       description: 'Civil Engineer turned Software Enthusiast, specializing in Full-Stack Development and passionate about emerging technologies like MERN stack and AWS. Bringing leadership from soccer and creativity in film-making, I am eager to collaborate and innovate in the tech space.',
-    
+
     },
     {
       imageUrl: chiemela,
@@ -25,10 +25,10 @@ const About = () => {
     {
       imageUrl: aakansha,
       title: 'Aakansha Desai',
-      description:'Connecting, collaborating, and creating are at the heart of who I am. Driven by a relentless curiosity and a passion for continuous growth, I embrace new challenges and eagerly seek opportunities to learn, create, and leave a lasting impact. I keep looking for opportunities for creative expression, be it through art or writing code. I have a keen interest in software development and cloud operations. I enjoy witnessing the entire product lifecycle, from development to deployment and operations, and I aspire to contribute to this holistic process in future roles.' ,
+      description: 'Connecting, collaborating, and creating are at the heart of who I am. Driven by a relentless curiosity and a passion for continuous growth, I embrace new challenges and eagerly seek opportunities to learn, create, and leave a lasting impact. I keep looking for opportunities for creative expression, be it through art or writing code. I have a keen interest in software development and cloud operations. I enjoy witnessing the entire product lifecycle, from development to deployment and operations, and I aspire to contribute to this holistic process in future roles.',
     },
-   
-    
+
+
     // Add more card data as needed
   ];
 
@@ -73,13 +73,13 @@ const About = () => {
         <h1> Meet the Designers</h1>
       </Container>
 
-       {/* Main Section */}
-       <div className="container mt-5">
+      {/* Main Section */}
+      <div className="container mt-5">
         {/* ... (Your existing text) */}
         <Row>
           {cardData.map((card, index) => (
             <Col key={index} className="mb-3">
-              <Card style={{ marginBottom: '1000px' }}>
+              <Card style={{ marginBottom: '10px' }}>
                 <Card.Img variant="top" src={card.imageUrl} alt={card.title} />
                 <Card.Body>
                   <Card.Title>{card.title}</Card.Title>
@@ -90,7 +90,7 @@ const About = () => {
           ))}
         </Row>
       </div>
-     
+
     </div>
   );
 };

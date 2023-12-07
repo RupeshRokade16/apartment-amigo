@@ -79,6 +79,10 @@
   @media (max-width: 576px) {
     .header-container {
       padding: 10px;
+      .col {
+        display: block !important; /* Use !important to override Bootstrap styles */
+      }
+
     }
   
     .card {
