@@ -1,34 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
-import AuthService from '../../services/authService';
+import React, { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import AuthService from "../../services/authService";
+import apiCaller from "../../utils/apiCaller";
 
 const Admin = () => {
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalHouseholds, setTotalHouseholds] = useState(0);
-  const [selectedHouseholdId, setSelectedHouseholdId] = useState('');
+  const [selectedHouseholdId, setSelectedHouseholdId] = useState("");
   const [householdMembers, setHouseholdMembers] = useState([]);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
+  //const [selectedMemberUsername, setSelectedMemberUsername] = useState("");
 
   // Function to fetch household members based on the selected id
   const fetchHouseholdMembers = async () => {
-    // fetchHouseholdMembersById(selectedHouseholdId).then(data => setHouseholdMembers(data));
+    try {
+      const members = await apiCaller.get(
+        `/households/${selectedHouseholdId}/members`
+      );
+
+      if (!members) {
+        console.log("Members not found");
+      }
+      setHouseholdMembers(members.data);
+      console.log("The received members are", members.data);
+    } catch (error) {
+      console.error("Error fetching household members:", error);
+    }
   };
 
   // Function to remove a member from a household
-  const removeMemberFromHousehold = async (memberId) => {
-    // removeMember(selectedHouseholdId, memberId).then(() => fetchHouseholdMembers());
+  const removeMemberFromHousehold = async (memberId, memberUsername) => {
+    try {
+      const response = await apiCaller.delete(
+        `households/${selectedHouseholdId}/${memberUsername}/delete`
+      );
+      setSelectedHouseholdId(response.data);
+
+      //Updating table
+      fetchHouseholdMembers();
+      console.log(
+        "Received selected household after deletion",
+        selectedHouseholdId
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleLogout = () => {
     // Simulate logout by removing the fake token
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     // Set the state to trigger the redirect
     setRedirectToLogin(true);
   };
 
   useEffect(() => {
     const checkExistingToken = () => {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
         // If the token is not present, redirect to the admin login page
         setRedirectToLogin(true);
@@ -47,15 +75,13 @@ const Admin = () => {
 
         setTotalHouseholds(households);
       } catch (error) {
-        console.error('Error fetching total users and households:', error);
+        console.error("Error fetching total users and households:", error);
       }
     };
 
     checkExistingToken();
     fetchTotalUsersAndHouseholds();
   }, []);
-
-  
 
   // Use the Navigate component directly instead of returning it from the render function
   if (redirectToLogin) {
@@ -99,11 +125,11 @@ const Admin = () => {
             <tbody>
               {householdMembers.map((member) => (
                 <tr key={member.id}>
-                  <td>{member.name}</td>
+                  <td>{member.username}</td>
                   <td>
                     <button
                       className="btn btn-danger"
-                      onClick={() => removeMemberFromHousehold(member.id)}
+                      onClick={() => removeMemberFromHousehold(member.id, member.username)}
                     >
                       Remove
                     </button>

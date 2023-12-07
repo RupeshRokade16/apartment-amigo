@@ -144,8 +144,8 @@ const updateUserData = async (req, res) => {
     try{
     const households = await Household.find();
     var length = Object.keys(households).length;
-    console.log("Total users Array", households, length);
-  res.status(200).json(length)  
+    //console.log("Total users Array", households, length);
+    res.status(200).json(length)  
   } catch (error) {
     console.error('Error fetching all users:', error);
     res.status(500).json({ message: 'Internal Server Error' });

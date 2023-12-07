@@ -1,20 +1,18 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 const router = express.Router();
-const User = require('../models/userModel');
-const Household = require('../models/householdModel');
-const dotenv = require('dotenv');
+const User = require("../models/userModel");
+const Household = require("../models/householdModel");
+const dotenv = require("dotenv");
 dotenv.config();
-
 
 // const postmark = require('postmark');
 
-// 
+//
 // // Replace 'YOUR_POSTMARK_SERVER_TOKEN' with the actual environment variable
 // const postmarkServerToken = process.env.POSTMARK_SERVER_TOKEN;
 
 // // Replace 'YOUR_SERVER_TOKEN' with the token from your Postmark server
-
 
 // const client = new postmark.ServerClient(postmarkServerToken);
 
@@ -38,56 +36,59 @@ dotenv.config();
 // const sendinblueApiKey = 'YOUR_API_KEY';
 // const sendinblueClient = new sendinblue(sendinblueApiKey);
 
-
 // Create a new user
-router.post('/users', async (req, res) => {
+router.post("/users", async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
     // Check if the username and email are unique
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
     if (existingUser) {
-      return res.status(400).json({ message: 'Username or email already exists' });
+      return res
+        .status(400)
+        .json({ message: "Username or email already exists" });
     }
 
     const newUser = new User({ username, email, password });
     await newUser.save();
     sendRegistrationEmail(email);
 
-    res.status(201).json({ message: 'User created successfully', user: newUser });
+    res
+      .status(201)
+      .json({ message: "User created successfully", user: newUser });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
-router.get('/users', async (req, res) => {
-    try {
-      const users = await User.find();
-      res.status(200).json({ users });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  });
+router.get("/users", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({ users });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 // Get user details
-router.get('/users/:userId', async (req, res) => {
+router.get("/users/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
 
-    const user = await User.findById(userId).populate('household');
+    const user = await User.findById(userId).populate("household");
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     res.status(200).json({ user });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
 // Update user information
-router.put('/users/:userId', async (req, res) => {
+router.put("/users/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
     const { username, email, password } = req.body;
@@ -99,85 +100,120 @@ router.put('/users/:userId', async (req, res) => {
     );
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json({ message: 'User updated successfully', user });
+    res.status(200).json({ message: "User updated successfully", user });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
-
-
 // Delete a user
-router.delete('/users/:userId', async (req, res) => {
+router.delete("/users/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
 
     const user = await User.findByIdAndDelete(userId);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json({ message: 'User deleted successfully' });
+    res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 
 // Join a household
 // Join a household
-router.post('/users/:userId/join-household/:householdId', async (req, res) => {
-    try {
-      const userId = req.params.userId;
-      const householdId = req.params.householdId;
-  
-      const user = await User.findById(userId);
-      const household = await Household.findById(householdId);
-  
-      if (!user || !household) {
-        return res.status(404).json({ message: 'User or household not found' });
-      }
-  
-      if (household.members.includes(userId)) {
-        return res.status(400).json({ message: 'User is already a member of the household' });
-      }
-  
-      household.members.push(userId);
-      await household.save();
-  
-      user.household = householdId;
-      await user.save();
-  
-      res.status(200).json({ message: 'User joined the household successfully', user, household });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Internal server error' });
-    }
-  });
+router.post("/users/:userId/join-household/:householdId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const householdId = req.params.householdId;
 
-  // ...
+    const user = await User.findById(userId);
+    const household = await Household.findById(householdId);
+
+    if (!user || !household) {
+      return res.status(404).json({ message: "User or household not found" });
+    }
+
+    if (household.members.includes(userId)) {
+      return res
+        .status(400)
+        .json({ message: "User is already a member of the household" });
+    }
+
+    household.members.push(userId);
+    await household.save();
+
+    user.household = householdId;
+    await user.save();
+
+    res
+      .status(200)
+      .json({
+        message: "User joined the household successfully",
+        user,
+        household,
+      });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// ...
 
 // Get all members for a specific household
-router.get('/households/:householdId/members', async (req, res) => {
-    try {
-      const householdId = req.params.householdId;
-      const household = await Household.findById(householdId).populate('members');
-      const members = household.members;
-      res.json(members);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  });
-  
-  // ...
-  
-  
+router.get("/households/:householdId/members", async (req, res) => {
+  try {
+    const householdId = req.params.householdId;
+    const household = await Household.findById(householdId).populate("members");
+    //console.log("The backend household is", household);
+    const members = household.members;
+    //console.log("The return value is", members);
+    res.json(members);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Remove a member from a household (and remove the household object inside member)
+router.delete("/households/:householdId/:memberUsername/delete", async (req, res) => {
+  try {
+    const householdId = req.params.householdId;
+    const memberUsername = req.params.memberUsername;
+
+    const member = await User.findOne({username:memberUsername});
+    const household = await Household.findById(householdId);
+
+    console.log("Household Before deletion", household);
+
+    //Remove household from member
+    member.household = null;
+    await member.save();
+
+    // Remove member from household
+    household.members = household.members.filter(
+      (memberId) => memberId.toString() !== member._id.toString()
+    );
+    
+    await household.save();
+
+    console.log("The updated household is", household);
+    console.log("Remove member", member);
+    res.json(household._id);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 // Other user controller functions...
 

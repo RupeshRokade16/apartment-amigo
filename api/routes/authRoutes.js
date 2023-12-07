@@ -12,6 +12,7 @@ router.post('/household', authMiddleware, authController.createOrJoinHousehold);
 router.put('/userData/:userId', authMiddleware, authController.updateUserData);
 router.get('/admin/totalUsers', authController.getAllUsers);
 router.get('/admin/totalHouseholds', authController.getAllHouseholds);
+//router.delete('/households/:', authController.);
 
 
 module.exports = router;
