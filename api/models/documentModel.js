@@ -2,6 +2,7 @@
 const mongoose = require('mongoose');
 
 const documentSchema = new mongoose.Schema({
+    displayName: String,
   fileName: String,
   filePath: String,
   household: String,
