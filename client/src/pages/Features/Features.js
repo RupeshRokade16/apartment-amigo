@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Navbar, Nav, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import './Features.css'; 
+import './Features.css';
 import homeImage from '../../assets/images/home.jpg';
 import shopping from '../../assets/images/image1.jpg';
 import chores from '../../assets/images/image2.jpg';
@@ -16,7 +16,7 @@ const Features = () => {
       imageUrl: homeImage,
       title: 'Document sharing system',
       description: 'Experience seamless collaboration with our Document Sharing System. Effortlessly share, organize, and access important documents within your living space. Enhance communication and coordination as you securely upload, manage, and retrieve files, ensuring that everyone in your community stays informed and connected. Simplify document workflows, reduce clutter, and foster a more efficient and organized living environment.',
-    
+
     },
     {
       imageUrl: shopping,
@@ -26,14 +26,14 @@ const Features = () => {
     {
       imageUrl: chores,
       title: 'Chore Chart',
-      description:'Simplify household responsibilities with our Chore Chart feature. Assign and track chores effortlessly, promoting a collaborative and organized approach to maintaining a clean and tidy living space. Foster teamwork and ensure everyone plays a role in keeping your home in top shape.',
+      description: 'Simplify household responsibilities with our Chore Chart feature. Assign and track chores effortlessly, promoting a collaborative and organized approach to maintaining a clean and tidy living space. Foster teamwork and ensure everyone plays a role in keeping your home in top shape.',
     },
     {
       imageUrl: calendar,
       title: 'Shared Calendars ',
       description: 'Stay organized and connected with our Shared Calendars feature. Coordinate schedules, events, and important dates effortlessly with your housemates. Whether its planning social gatherings, managing appointments, or coordinating activities, our Shared Calendars make it easy for everyone to stay on the same page and enjoy a well-coordinated living experience.',
     },
-    
+
     // Add more card data as needed
   ];
 
@@ -62,7 +62,7 @@ const Features = () => {
                 About
               </Nav.Link>
             </Nav.Item>
-          
+
           </Nav>
           <Link to="/login" className="btn btn-light px-4" id="loginButton">
             Login
@@ -76,7 +76,7 @@ const Features = () => {
         <Row>
           {cardData.map((card, index) => (
             <Col key={index} className="mb-3">
-              <Card style={{ width: '50rem', marginBottom: '500px' }}>
+              <Card style={{ width: '50rem', marginBottom: '50px' }}>
 
                 <Card.Img variant="top" src={card.imageUrl} alt={card.title} />
                 <Card.Body>
@@ -88,7 +88,7 @@ const Features = () => {
           ))}
         </Row>
       </div>
-     
+
     </div>
   );
 };
