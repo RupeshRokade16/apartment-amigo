@@ -60,6 +60,14 @@ app.use(require("./controllers/documentController"));
 
 connectToDatabase().catch((error) => process.exit(1));
 
+
+//production script
+app.use(express.static("../client/build"));
+app.get("*", (req,res)=>{
+  res.sendFile(path.resolve(__dirname,"client","build","index.html"));
+})
+
+
 // Start the Express app and listen on the specified port
 app.listen(port, () => {
   // Log a message indicating that the server is running

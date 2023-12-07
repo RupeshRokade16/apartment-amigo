@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/static/css/main.d63531cc.css",
+    "main.js": "/static/js/main.e29d5148.js",
+    "static/media/signup-bg.png": "/static/media/signup-bg.683b434048eadf9c8e02.png",
+    "static/media/image1.jpg": "/static/media/image1.e293a67a29922c5e06e7.jpg",
+    "static/media/image2.jpg": "/static/media/image2.68bef9204ede47ac8eae.jpg",
+    "static/media/image4.jpg": "/static/media/image4.c52ec3790103fa63fd0a.jpg",
+    "static/media/home.jpg": "/static/media/home.7a9546f954cd8dbcf830.jpg",
+    "static/media/image3.jpg": "/static/media/image3.223b6fd509effdd2973c.jpg",
+    "static/media/login-01.png": "/static/media/login-01.d6a0fcd7f402ecf3e0e4.png",
+    "static/media/aakansha.jpg": "/static/media/aakansha.fa397f88346581ec5d97.jpg",
+    "static/media/chiemela.jpg": "/static/media/chiemela.98ac872da17fa1c52016.jpg",
+    "static/media/dashboard-bg.jpeg": "/static/media/dashboard-bg.5d88be5697c5dd54a2df.jpeg",
+    "static/media/rupesh.jpg": "/static/media/rupesh.ce3c4ae98d1d61c192c0.jpg",
+    "index.html": "/index.html",
+    "main.d63531cc.css.map": "/static/css/main.d63531cc.css.map",
+    "main.e29d5148.js.map": "/static/js/main.e29d5148.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d63531cc.css",
+    "static/js/main.e29d5148.js"
+  ]
+}
