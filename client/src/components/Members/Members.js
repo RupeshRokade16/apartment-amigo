@@ -27,7 +27,7 @@ function Members(props) {
     const labelElement = document.querySelector('.code');
 
     if (labelElement) {
-      const textToCopy = labelElement.textContent;
+      const textToCopy = labelElement.textContent.trim();
 
       // Using the modern Clipboard API
       navigator.clipboard.writeText(textToCopy)
