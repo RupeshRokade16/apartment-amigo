@@ -1,11 +1,11 @@
 /* CardLayout.css */
 
 .card-layout {
-  border: 1px solid #ddd;
+  border: 1px solid black;
+  box-shadow: 10px 10px 10px 10px #2a2f4f8b;
   border-radius: 10px;
   margin: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background: #fff;
+  background: #ffffff6b;
   overflow: hidden;
   height: 100%; /* Set a fixed height for the card */
 }
@@ -19,7 +19,7 @@
 }
 
 .card-content {
-  background: #E5BEEC;
+  background: #e5beec87;
   border-radius: 0 0 10px 10px;
   padding: 15px;
   overflow-y: auto; /* Make the content area scrollable if it overflows */

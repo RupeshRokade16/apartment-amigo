@@ -1,7 +1,43 @@
 const express = require('express');
+const app = express();
 const router = express.Router();
 const User = require('../models/userModel');
 const Household = require('../models/householdModel');
+const dotenv = require('dotenv');
+dotenv.config();
+
+
+// const postmark = require('postmark');
+
+// 
+// // Replace 'YOUR_POSTMARK_SERVER_TOKEN' with the actual environment variable
+// const postmarkServerToken = process.env.POSTMARK_SERVER_TOKEN;
+
+// // Replace 'YOUR_SERVER_TOKEN' with the token from your Postmark server
+
+
+// const client = new postmark.ServerClient(postmarkServerToken);
+
+// const sendRegistrationEmail = async (userEmail) => {
+//   try {
+//     const message = {
+//       From: 'desai.aaka@northeastern.edu', // Sender's email
+//       To: userEmail, // Recipient's email
+//       Subject: 'Welcome to Apartment Amigo!',
+//       TextBody: 'Thank you for registering with Apartment Amigo. We are excited to have you!',
+//     };
+
+//     const response = await client.sendEmail(message);
+//     console.log('Email sent successfully:', response);
+//   } catch (error) {
+//     console.error('Error sending email:', error.message);
+//   }
+// };
+
+// const sendinblue = require('sendinblue-api');
+// const sendinblueApiKey = 'YOUR_API_KEY';
+// const sendinblueClient = new sendinblue(sendinblueApiKey);
+
 
 // Create a new user
 router.post('/users', async (req, res) => {
@@ -16,6 +52,7 @@ router.post('/users', async (req, res) => {
 
     const newUser = new User({ username, email, password });
     await newUser.save();
+    sendRegistrationEmail(email);
 
     res.status(201).json({ message: 'User created successfully', user: newUser });
   } catch (error) {

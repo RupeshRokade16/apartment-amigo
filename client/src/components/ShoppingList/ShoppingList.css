@@ -16,6 +16,18 @@
     max-width: 100%;
     border-collapse: collapse;
   }
+  .sl-thead{
+    background-color: #917FB3;
+    color: white;
+    box-shadow: 9px 8px 10px #2a2f4f8b;
+    border:1px solid black;
+  }
+  .sl-thead th{
+    padding: 10px;
+    text-align: center;
+    align-items: center;
+    margin-bottom: 10px;
+  }
   
   .sl-td {
     padding: 10px;
@@ -25,7 +37,7 @@
   
   .sl-td:first-child {
     width: 5%;
-    
+   
   }
   
   .sl-td:nth-child(2) {
