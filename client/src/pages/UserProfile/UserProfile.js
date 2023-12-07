@@ -134,7 +134,7 @@ const UserProfile = (props) => {
   }
 
   return (
-    
+
     <>
       <div className="cardUser">
         <div className="card-body-user">
@@ -147,7 +147,7 @@ const UserProfile = (props) => {
                   value={editedUsername}
                   onChange={(e) => setEditedUsername(e.target.value)}
                   placeholder="Type your new username"
-                  style={{color:'black'}}
+                  style={{ color: 'black' }}
                 />
               ) : (
                 userData.username
@@ -207,9 +207,9 @@ const UserProfile = (props) => {
         </div>
       </div>
     </>
-      
-      
-    
+
+
+
   );
 };
 
