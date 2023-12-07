@@ -1,46 +1,92 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import { Card, Navbar, Nav, Row, Col, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import './About.css'; 
+import rupesh from '../../assets/images/rupesh.jpg';
+import chiemela from '../../assets/images/chiemela.jpg';
+import aakansha from '../../assets/images/aakansha.jpg';
+
+
 
 const About = () => {
-  // Sample data for multiple cards
+  // Sample data for the CardLayout component
   const cardData = [
     {
-      id: 1,
-      title: 'Card 1',
-      text: 'Some quick example text for Card 1.',
-      imageUrl: 'https://via.placeholder.com/50x50',
+      imageUrl: rupesh,
+      title: 'Rupesh Rokade',
+      description: 'Civil Engineer turned Software Enthusiast, specializing in Full-Stack Development and passionate about emerging technologies like MERN stack and AWS. Bringing leadership from soccer and creativity in film-making, I am eager to collaborate and innovate in the tech space.',
+    
     },
     {
-      id: 2,
-      title: 'Card 2',
-      text: 'Some quick example text for Card 2.',
-      imageUrl: 'https://via.placeholder.com/50x50',
+      imageUrl: chiemela,
+      title: 'Chiemela Onyeoziri',
+      description: 'Architect turned Software Engineer driven by an unwavering passion for problem-solving and the creative mindset that architecture instilled in me.',
     },
     {
-      id: 3,
-      title: 'Card 3',
-      text: 'Some quick example text for Card 3.',
-      imageUrl: 'https://via.placeholder.com/50x50',
+      imageUrl: aakansha,
+      title: 'Aakansha Desai',
+      description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' ,
     },
+   
+    
     // Add more card data as needed
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <p>
-        Welcome to our page! Explore the following cards to learn more about each topic:
-      </p>
-      {cardData.map((card) => (
-        <Card key={card.id} style={{ width: '400px', margin: '10px' }}>
-          <Card.Img variant="top" src={card.imageUrl} />
-          <Card.Body>
-            <Card.Title>{card.title}</Card.Title>
-            <Card.Text>{card.text}</Card.Text>
-            <Button variant="primary">Go somewhere</Button>
-          </Card.Body>
-        </Card>
-      ))}
+    <div>
+      {/* Navbar */}
+      <Navbar bg="light" expand="lg" id="mynav">
+        <Navbar.Brand className="px-5 col-sm-12 col-md-6" as={Link} to="/">
+          Apartment Amigo
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="ml-auto">
+            <Nav.Item className="nav-item px-1">
+              <Nav.Link as={Link} to="/home">
+                Discover
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="nav-item px-1">
+              <Nav.Link as={Link} to="/features">
+                Features
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item className="nav-item px-1">
+              <Nav.Link as={Link} to="/about">
+                About
+              </Nav.Link>
+            </Nav.Item>
+            
+          </Nav>
+          <Link to="/login" className="btn btn-light px-4" id="loginButton">
+            Login
+          </Link>
+        </Navbar.Collapse>
+      </Navbar>
+
+      <Container className="text-center mt-3">
+        <h1> Meet the Designers</h1>
+      </Container>
+
+       {/* Main Section */}
+       <div className="container mt-5">
+        {/* ... (Your existing text) */}
+        <Row>
+          {cardData.map((card, index) => (
+            <Col key={index} className="mb-3">
+              <Card style={{ marginBottom: '1000px' }}>
+                <Card.Img variant="top" src={card.imageUrl} alt={card.title} />
+                <Card.Body>
+                  <Card.Title>{card.title}</Card.Title>
+                  <Card.Text>{card.description}</Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </div>
+     
     </div>
   );
 };
