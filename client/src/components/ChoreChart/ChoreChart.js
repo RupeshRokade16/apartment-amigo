@@ -143,7 +143,12 @@ const ChoreChart = (props) => {
         </div>
       </div>
       <table className='cc-table'>
-
+      <thead className='cc-thead'>
+        <th>Actions</th>
+        <th>Chore Name</th>
+        <th>Assignee</th>
+        <th>Status</th>
+      </thead>
         <tbody>
           {chores.map((chore) => (
             <tr key={chore._id} className={chore.completed ? 'completed' : ''}>
@@ -160,12 +165,7 @@ const ChoreChart = (props) => {
               <td className='cc-td'>
                 {editingChore && editingChore._id === chore._id ? (
                   <div className="modal1">
-                    <button onClick={finishEditingChore}>
-                      <i className="fas fa-check"></i>
-                    </button>
-                    <button onClick={handleModalClose}>
-                      <i className="fas fa-times"></i>
-                    </button>
+                   
                     <input
                       type="text"
                       value={editingChore.choreName}
@@ -199,6 +199,12 @@ const ChoreChart = (props) => {
                         </option>
                       ))}
                     </select>
+                    <button onClick={finishEditingChore}>
+                      <i className="fas fa-check"></i>
+                    </button>
+                    <button onClick={handleModalClose}>
+                      <i className="fas fa-times"></i>
+                    </button>
 
                   </div>
                 ) : (
@@ -208,6 +214,7 @@ const ChoreChart = (props) => {
                     ) : (
                       'UnAssigned'
                     )}
+                    
                   </span>
                 )}
               </td>

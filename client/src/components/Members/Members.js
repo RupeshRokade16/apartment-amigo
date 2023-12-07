@@ -5,6 +5,7 @@ import './Members.css'
 
 function Members(props) {
     const [members, setMembers] = useState([]);
+    const [showPopup, setShowPopup] = useState(false);
     const householdID = props.householdID;
 
     useEffect(() => {
@@ -21,16 +22,50 @@ function Members(props) {
     
         fetchData();
       }, [householdID]);
-  
+
+      const handleCopyClick = () => {
+    const labelElement = document.querySelector('.code');
+
+    if (labelElement) {
+      const textToCopy = labelElement.textContent;
+
+      // Using the modern Clipboard API
+      navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+          console.log('Text successfully copied to clipboard');
+          setShowPopup(true);
+
+          // Hide the popup after a short delay (e.g., 2 seconds)
+          setTimeout(() => {
+            setShowPopup(false);
+          }, 2000);
+        })
+        .catch((err) => {
+          console.error('Error copying text to clipboard:', err);
+        });
+    }
+  };
   
       return (
         <div>
-          <ul>
-            {members.map((member) => (
-              <li key={member._id}>
-                <h4>{member.username}</h4></li>
+          <div>
+          <label className='code'>{householdID}  <button onClick={handleCopyClick} style={{ background: 'transparent', border: 'none' }}><i class="cool-btn fa fa-sharp fa-thin fa-copy"></i></button></label>
+          {showPopup && <div className="popup alert alert-success">Copied to clipboard</div>}
+          
+          
+          </div>
+          <table className='sl-table'>
+      <thead className='sl-thead'>
+      
+        <th>Members</th>
+      </thead>
+        <tbody>
+        {members.map((member) => (
+              <tr key={member._id}>
+                <td className='sl-td'>{member.username}</td></tr>
             ))}
-          </ul>
+        </tbody>
+        </table>
         </div>
       );
     };

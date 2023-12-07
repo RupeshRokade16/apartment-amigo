@@ -113,6 +113,11 @@ const ShoppingList = (props) => {
         </div>
       </div>
       <table className='sl-table'>
+      <thead className='sl-thead'>
+        <th>Status</th>
+        <th>Item Name</th>
+        <th>Actions</th>
+      </thead>
         <tbody>
           {tasks.map((task) => (
             <tr key={task._id} className={task.completed ? 'completed' : ''}>

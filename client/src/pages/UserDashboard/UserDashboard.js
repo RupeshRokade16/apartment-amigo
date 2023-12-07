@@ -69,14 +69,17 @@ const UserDashboard = () => {
       {userData && (
         
         <div>
+          <div class="header">
           <h2 id='topNav'>{userData.username}'s Dashboard</h2>
           <UserNavbar user = {userData} handleLogout={handleLogout}/>
+        </div>
+
           <div className='details'>
             <h3>WELCOME, {userData.username}!</h3>
           </div>
           <div className="row">
           <div className="col-md-2">
-              <CardLayout title={'Members'} content={<Members householdID={userData.household} />} />
+              <CardLayout title={'Household'} content={<Members householdID={userData.household} />} />
             </div>
             <div className="col-md-6">
               <CardLayout title={'Chore Chart'} content={<ChoreChart householdID={userData.household} />} />
