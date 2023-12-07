@@ -1,4 +1,4 @@
-.card {
+.cardUser {
   max-width: 500px; /* Adjusted width */
   margin: auto;
   background-color: #f8f9fa;
@@ -7,7 +7,7 @@
   overflow: hidden;
 }
 
-.card-img-top {
+.card-img-top-user {
   width: 100%;
   height: auto; /* Maintain aspect ratio */
   object-fit: cover;
@@ -15,65 +15,65 @@
   border-top-right-radius: 10px;
 }
 
-.card-body {
+.card-body-user {
   padding: 20px;
 }
 
 .card-titleUser {
-  background-color: #2A2F4F;
+
   font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
-.card-text {
+.card-text-user {
   font-size: 1.5rem;
   margin-top: 25px;
 }
 
-.btn {
+.btn-user {
   cursor: pointer;
 }
 
-.btn-primary {
+.btn-primary-user {
   background-color: #917FB3;
   color: #fff;
   margin-right: 5px;
   margin-left:auto;
 }
 
-.btn-primary:hover{
+.btn-primary-user:hover{
   background-color: #2A2F4F;
 }
 
-.btn-secondary {
+.btn-secondary-user {
   background-color: #917FB3;
   color: #fff;
   margin-left:5px;
   margin-right:5px;
 }
 
-.btn-secondary:hover{
+.btn-secondary-user:hover{
   background-color: #2A2F4F;
   color:#fff;
 }
 
 
-.btn-info {
+.btn-info-user {
   background-color: #917FB3;
   color: #fff;
   margin-left: 5px;
   margin-right:auto;
 }
 
-.btn-info:hover{
+.btn-info-user:hover{
   background-color: #2A2F4F;
 }
 
-.btn-link {
+.btn-link-user {
   color: #007bff;
   text-decoration: none;
 }
 
-.btn-link:hover {
+.btn-link-user:hover {
   text-decoration: underline;
 }
