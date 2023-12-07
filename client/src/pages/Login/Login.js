@@ -92,8 +92,8 @@ const Login = () => {
           <input type="password" className="form-control" id="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} />
       </div>
       <br></br>
-      <div className='mb-3'>
-        <button type="button" className="btn btn-primary btn-block" onClick={handleLogin} disabled={isLoading}>
+      <div className='mb-3' >
+        <button type="button" id="loginBox" className="btn btn-primary btn-block" onClick={handleLogin} disabled={isLoading}>
           {isLoading ? 'Logging in...' : 'Login'}
         </button>
       </div>

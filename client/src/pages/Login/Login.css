@@ -19,6 +19,10 @@
     
   }
 
+  #loginBox{
+    
+  }
+
   #loginTitle{
     color:rgba(255, 255, 255, 0.813);
   }
@@ -42,7 +46,7 @@
   }
 
   .signUpButton{
-    color:#3b8cd3;
+    color:#E5BEEC;
   }
 
   @media (max-width: 1060px) and (min-width: 769px) {
