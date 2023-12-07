@@ -89,6 +89,6 @@ We welcome contributions! Follow these steps:
 
 ## License
 
-This project is licensed under the [Your License Name] - see the [LICENSE.md](LICENSE.md) file for details.
+This project is created only for educational purposes
 
 Thank you for choosing Apartment Amigo! We hope it enhances your household management experience.
