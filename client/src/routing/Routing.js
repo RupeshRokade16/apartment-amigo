@@ -10,6 +10,7 @@ import UserDashboard from '../pages/UserDashboard/UserDashboard';
 import HouseholdSelection from '../pages/HouseholdSelection/HouseholdSelection';
 import UserProfile from '../pages/UserProfile/UserProfile';
 import Admin from '../pages/Admin/Admin';
+import AdminLogin from '../pages/AdminLogin/AdminLogin';
 
 const Routing = () => {
   return (
@@ -23,6 +24,7 @@ const Routing = () => {
         <Route path="/userDashboard" element={<UserDashboard />} />
         <Route path="/householdSelection" element={<HouseholdSelection/>}/>
         <Route path='/profile' element={<UserProfile/>}/>
+        <Route path='/adminLogin' element={<AdminLogin/>}/>
         <Route path='/admin' element={<Admin/>}/>
         {/* Additional routes can go here */}
       </Routes>

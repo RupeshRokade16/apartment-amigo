@@ -44,6 +44,90 @@ const AuthService = {
     }
   },
 
+  getTotalUsers: async () => {
+    try {
+      const token = localStorage.getItem('token');
+  
+      if (!token) {
+        throw new Error('Token not found');
+      }
+  
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      };
+  
+      const response = await apiCaller.get('/api/admin/totalUsers', { headers });
+      return response.data.totalUsers; // Adjust the response structure based on your API
+    } catch (error) {
+      console.error('Error fetching total users:', error);
+      throw error;
+    }
+  },
+
+  getTotalHouseholds: async () => {
+    try {
+      const token = localStorage.getItem('token');
+  
+      if (!token) {
+        throw new Error('Token not found');
+      }
+  
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      };
+  
+      const response = await apiCaller.get('/api/admin/totalHouseholds', { headers });
+      return response.data.totalHouseholds; // Adjust the response structure based on your API
+    } catch (error) {
+      console.error('Error fetching total households:', error);
+      throw error;
+    }
+  },
+
+  getHouseholdMembers: async (householdId) => {
+    try {
+      const token = localStorage.getItem('token');
+  
+      if (!token) {
+        throw new Error('Token not found');
+      }
+  
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      };
+  
+      const response = await apiCaller.get(`/api/admin/householdMembers/${householdId}`, { headers });
+      return response.data.householdMembers; // Adjust the response structure based on your API
+    } catch (error) {
+      console.error('Error fetching household members:', error);
+      throw error;
+    }
+  },
+
+  removeMemberFromHousehold: async (householdId, memberId) => {
+    try {
+      const token = localStorage.getItem('token');
+  
+      if (!token) {
+        throw new Error('Token not found');
+      }
+  
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      };
+  
+      const response = await apiCaller.delete(`/api/admin/removeMember/${householdId}/${memberId}`, { headers });
+      return response.data; // Adjust the response structure based on your API
+    } catch (error) {
+      console.error('Error removing member from household:', error);
+      throw error;
+    }
+  },
+
   isAuthenticated: async () => {
     try {
       const token = localStorage.getItem('token');
@@ -111,7 +195,14 @@ const AuthService = {
     return passwordRegex.test(password);
   },
   
+
+
+
 };
+
+
+
+
 
 
 
