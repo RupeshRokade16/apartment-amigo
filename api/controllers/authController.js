@@ -3,6 +3,16 @@ const express = require("express");
 const authMiddleware = require("../middleware/authMiddleware");
 const Household = require("../models/householdModel");
 const User = require("../models/userModel");
+const dotenv = require("dotenv");
+dotenv.config();
+const ElasticEmail = require('@elasticemail/elasticemail-client');
+const client = ElasticEmail.ApiClient.instance;
+const apikey = client.authentications['apikey'];
+apikey.apiKey = process.env.YOUR_API_KEY;
+const templatesApi = new ElasticEmail.TemplatesApi();
+const emailsApi = new ElasticEmail.EmailsApi();
+
+
 
 async function login(req, res) {
   const { username, password } = req.body;
@@ -41,6 +51,12 @@ async function register(req, res) {
     const newUser = await authService.registerUser(username, email, password);
     console.log("After awaiting register")
     res.status(201).json({ message: "Registration successful", user: newUser });
+
+    sendEmail(email)
+    .then(() => console.log('Email sent successfully to', email))
+    .catch((error) => console.error('Failed to send email:', error));
+
+
   } catch (error) {
     if (error.name === "ValidationError") {
       res
@@ -271,6 +287,65 @@ const createOrJoinHousehold = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+
+async function sendEmail(to){
+  try {
+    const emailData = {
+      Recipients: {
+        To: [to]
+      },
+      Content: {
+        Body: [
+          {
+            ContentType: "HTML",
+            Charset: "utf-8",
+            Content: `
+              <h2>Welcome to Apartment Amigo</h2>
+              <p>Congratulations on becoming an Amigo. Let's set you up for a smooth living experience with your roommates.</p>
+              <h6>Here's what you should do, now that you have registered:</h6>
+              <ol>
+                <li>Create or Join a Household</li>
+                <li>Invite your roommates to join your household</li>
+                <li>Start using the amazing features that we provide</li>
+                <li>Relax and live stress-free!</li>
+              </ol>
+              <p>Have fun!</p>
+              <p>Best Regards,</p>
+              <p>Team Apartment Amigo</p>
+            `
+          },
+          {
+            ContentType: "PlainText",
+            Charset: "utf-8",
+            Content: "Mail content." // You can leave this as a placeholder or adjust as needed
+          }
+        ],
+        From: "teamapartmentamigo@gmail.com",
+        Subject: "Welcome to Apartment Amigo"
+      }
+    };
+    emailsApi.emailsTransactionalPost(emailData, callback);
+
+  
+    // The rest of your code to send the email...
+  } catch (error) {
+    // Handle errors
+    console.error('Error:', error);
+  }
+}
+
+const callback = (error, data, response) => {
+  if (error) {
+      console.error('error from callback:',error);
+  } else {
+      console.log('API called successfully.');
+      console.log('Email sent.');
+  }
+};
+
+
+
 
 module.exports = {
   router,
