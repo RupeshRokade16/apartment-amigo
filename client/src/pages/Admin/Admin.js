@@ -66,25 +66,34 @@ const Admin = () => {
         </div>
       </div>
 
-      <div>
-        <h3>Household Members</h3>
-        <ul className="list-group">
-          {householdMembers.map((member) => (
-            <li
-              key={member.id}
-              className="list-group-item d-flex justify-content-between align-items-center"
-            >
-              {member.name}
-              <button
-                className="btn btn-danger"
-                onClick={() => removeMemberFromHousehold(member.id)}
-              >
-                Remove
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {selectedHouseholdId && (
+        <div>
+          <h3>Household Members</h3>
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Member Name</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {householdMembers.map((member) => (
+                <tr key={member.id}>
+                  <td>{member.name}</td>
+                  <td>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => removeMemberFromHousehold(member.id)}
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       <div className="mt-3">
         <button className="btn btn-secondary" onClick={handleLogout}>
