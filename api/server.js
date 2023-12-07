@@ -62,10 +62,13 @@ connectToDatabase().catch((error) => process.exit(1));
 
 
 //production script
-app.use(express.static("../client/build"));
-app.get("*", (req,res)=>{
-  res.sendFile(path.resolve(__dirname,"client","build","index.html"));
-})
+const clientBuildPath = path.join(__dirname, '..', 'client', 'build');
+
+app.use(express.static(clientBuildPath));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(clientBuildPath, 'index.html'));
+});
 
 
 // Start the Express app and listen on the specified port
