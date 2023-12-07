@@ -14,6 +14,7 @@ const Register = () => {
   const [usernameValid, setUsernameValid] = useState(null);
   const [passwordValid, setPasswordValid] = useState(null);
   const [redirectToHousehold, setRedirectToHousehold] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const checkExistingToken = async () => {
@@ -27,7 +28,7 @@ const Register = () => {
   }, []);
 
   const handleRegister = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
     try {
       //Send api request
       const result = await AuthService.register({ username, email, password });
@@ -82,6 +83,36 @@ const Register = () => {
     }
   };
 
+  const calculateProgress = () => {
+    // You can adjust the weight of each field based on your form structure
+    const totalFields = 3; // Assuming you have 3 form fields
+
+    const completedFields = [emailValid, usernameValid, passwordValid].filter(
+      (isValid) => isValid
+    ).length;
+
+    const newProgress = (completedFields / totalFields) * 100;
+
+    let progressText = "Let's go";
+
+    if (newProgress >= 35) {
+      progressText = "There's no stopping now";
+    }
+
+    if (newProgress >= 69) {
+      progressText = "Almost there";
+    }
+
+    setProgress(newProgress);
+    setProgressText(progressText);
+  };
+
+  const [progressText, setProgressText] = useState("Let's go");
+
+  useEffect(() => {
+    calculateProgress();
+  }, [emailValid, usernameValid, passwordValid]);
+
   if (redirectToLogin) {
     return <Navigate to="/login" />;
   }
@@ -95,7 +126,7 @@ const Register = () => {
   }
 
   return (
-    <div className="container">
+    <div className="reg-container">
       {/* Signup Form Section */}
       <div className="form-container col-sm-12 col-md-6">
         <form id="signupForm">
@@ -173,8 +204,8 @@ const Register = () => {
                 Invalid
                 <br />
                 <span className="badge badge-warning" id="usernameWarning">
-                  At least 8 characters, at least one uppercase letter, one
-                  lowercase letter, and one digit
+                  At least 8 characters, at least one uppercase letter<br></br>
+                  one lowercase letter, and one digit
                 </span>
               </div>
             )}
@@ -188,12 +219,12 @@ const Register = () => {
               className="progress-bar"
               id="progressBar"
               role="progressbar"
-              style={{ width: "0%" }}
+              style={{ width: `${progress}%` }}
               aria-valuenow="0"
               aria-valuemin="0"
               aria-valuemax="100"
             >
-              <span id="progressBarText" />
+              <span id="progressBarText">{progressText}</span>
             </div>
           </div>
           <div className="centered-button">

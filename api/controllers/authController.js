@@ -27,17 +27,19 @@ async function login(req, res) {
 
 async function register(req, res) {
   const { username, email, password } = req.body;
-
+  console.log("Here1")
   //Validation check
   const errors = validateRegistrationInput(username, email, password);
-
+  console.log("post validation")
   if (Object.keys(errors).length > 0) {
     res.status(400).json({ message: "Validation Error", errors });
     return;
   }
 
   try {
+    console.log("inside try")
     const newUser = await authService.registerUser(username, email, password);
+    console.log("After awaiting register")
     res.status(201).json({ message: "Registration successful", user: newUser });
   } catch (error) {
     if (error.name === "ValidationError") {
@@ -163,11 +165,15 @@ const createOrJoinHousehold = async (req, res) => {
     const result = await authService.getUserData(req.headers);
 
     const { action, inputValue } = req.body;
-    //console.log("---------------" ,result);
-    //console.log("XXXXXXXXX")
+
     const userId = req.userId; // Assuming you have middleware setting userId in the request
-    //console.log("USERID - ",userId)
-    // Check the action (create or join) and perform the corresponding logic
+
+    const user = await User.findById(userId);
+
+    const oldHousehold = await Household.findById(user.household);
+
+    
+
     if (action === "create") {
       // Create a new household
       const newHousehold = new Household({
@@ -177,14 +183,10 @@ const createOrJoinHousehold = async (req, res) => {
 
       await newHousehold.save();
 
-      const user = await User.findById(userId);
-      //console.log("Household object" ,newHousehold);
-
-      //console.log("Before" ,userId)
-      // Update the user with the new household ID
-      // const user = await User.findByIdAndUpdate(userId, {
-      //   household: newHousehold._id,
-      // });
+      if (oldHousehold) {
+        oldHousehold.members = oldHousehold.members.filter(memberId => memberId.toString() !== userId);
+        await oldHousehold.save();
+      }
 
       user.household = newHousehold._id;
       await user.save();
@@ -203,14 +205,14 @@ const createOrJoinHousehold = async (req, res) => {
         return res.status(404).json({ message: "Household not found" });
       }
 
+      if (oldHousehold) {
+        oldHousehold.members = oldHousehold.members.filter(memberId => memberId.toString() !== userId);
+        await oldHousehold.save();
+      }
+
       // Add the user to the household members
       household.members.push(userId);
       await household.save();
-
-      // Update the user with the new household ID
-      // const user = await User.findByIdAndUpdate(userId, {
-      //   household: household._id,
-      //     });
 
       const user = await User.findById(userId);
       user.household = household._id;

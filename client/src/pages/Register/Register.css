@@ -3,11 +3,22 @@ body {
     margin: 0;
   }
   
-  .container {
+  .invalid-feedback{
+    color:rgba(255, 0, 0, 0.719);
+  }
+
+  .valid-feedback{
+    color: rgba(0, 128, 0, 0.635)
+  }
+
+  .reg-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 100vh;
+    margin:0px;
+    padding:0px;
+    width:100%;
   }
   
   .form-container {
@@ -59,3 +70,13 @@ body {
     text-align: center;
   }
   
+  @media (max-width: 768px) {
+    .reg-container {
+      flex-direction: column-reverse; /* Stack columns on small screens, image below the form */
+    }
+  
+    .form-container,
+    .image-container {
+      width: 100%; /* Full width for small screens */
+    }
+  }

@@ -1,12 +1,13 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-
+const bcrypt = require("bcrypt");
 
 async function loginUser(username, password) {
-  const user = await User.findOne({ username, password });
-
-  //const passwordMatch = await bcrypt.compare(password, user.password);
-  const passwordMatch = password === user.password;
+  const user = await User.findOne({ username: username });
+  console.log("userpass", user);
+  console.log("input pass", password);
+  const passwordMatch = await bcrypt.compare(password, user.password);
+  //const passwordMatch = password === user.password;
 
   if (user && passwordMatch) {
     //User authenticated, generate token
@@ -22,10 +23,14 @@ async function loginUser(username, password) {
 }
 
 async function registerUser(username, email, password) {
-  const newUser = new User({ username, email, password });
+  const salt = 5;
+  const HashedPassword = await bcrypt.hash(password, salt);
+  console.log(HashedPassword);
+  const newUser = new User({ username, email, password: HashedPassword });
+  console.log("Before Save", newUser);
   await newUser.save();
-
-  console.log("USER AFTER REGISTRATION", newUser)
+  console.log(newUser);
+  console.log("USER AFTER REGISTRATION", newUser);
 
   const token = jwt.sign({ userID: newUser._id }, "your_secret_key", {
     expiresIn: "1h",
@@ -36,7 +41,7 @@ async function registerUser(username, email, password) {
   // } else {
   //   console.log("Non null", newUser.household)
   // }
-  return {newUser, token};
+  return { newUser, token };
 }
 
 async function getUserData(headers) {
@@ -86,5 +91,3 @@ async function getUserData(headers) {
 // };
 
 module.exports = { loginUser, registerUser, getUserData };
-
-
