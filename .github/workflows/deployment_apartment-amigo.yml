@@ -53,4 +53,4 @@ jobs:
           app-name: 'apartment-amigo'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4B7662B1799F409B856952D9954205FC }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_63EC12E3019D4E539D64FDFE13F79E2B }}
